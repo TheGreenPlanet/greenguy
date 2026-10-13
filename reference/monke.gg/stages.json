@@ -1,0 +1,74 @@
+[
+  {
+    "Name": "Final Destination",
+    "Minimums": [{"Percent":"NA"}],
+    "Shortcuts": "fd, fi",
+    "Sprite": 1
+  },
+  {
+    "Name": "Kalos Pokémon League",
+    "Minimums": [{"Percent":5}],
+    "Shortcuts": "kalos",
+    "Sprite": 4
+  },
+  {
+    "Name": "Lylat Cruise",
+    "Minimums": [{"Percent":-2, "Name":"side platforms"}, {"Percent":0, "Name":"center platform"}],
+    "Shortcuts": "lylat",
+    "Sprite": 5
+  },
+  {
+    "Name": "Pokémon Stadium 2",
+    "Minimums": [{"Percent":0}],
+    "Shortcuts": "ps2",
+    "Sprite": 7
+  },
+  {
+    "Name": "Small Battlefield",
+    "Minimums": [{"Percent":2}],
+    "Shortcuts": "small,sbf,smallbattlefield",
+    "Sprite": 8
+  },
+  {
+    "Name": "Smashville",
+    "Minimums": [{"Percent":5}],
+    "Shortcuts": "sv,smashville,smas",
+    "Sprite": 9
+  },
+  {
+    "Name": "Town & City",
+    "Minimums": [{"Percent":5}],
+    "Shortcuts": "tnc, t&c, town, townandcity, towncity",
+    "Sprite": 10
+  },
+  {
+    "Name": "Unova Pokémon League",
+    "Minimums": [{"Percent":4}],
+    "Shortcuts": "unova",
+    "Sprite": 12
+  },
+  {
+    "Name": "Yoshi's Story",
+    "Minimums": [{"Percent":-1, "Name":"side platforms"}, {"Percent":-14, "Name":"top platform"}],
+    "Shortcuts": "yoshi, yoshis, ys",
+    "Sprite": 11
+  },
+  {
+    "Name": "Battlefield",
+    "Minimums": [{"Percent":8, "Name":"side platforms"}, {"Percent":-4, "Name":"top platform"}],
+    "Shortcuts": "bf, bat, battlefield",
+    "Sprite": 13
+  },
+  {
+    "Name": "Hollow Bastion",
+    "Minimums": [{"Percent":1}],
+    "Shortcuts": "hb",
+    "Sprite": 3
+  },
+  {
+    "Name": "Northern Cave",
+    "Minimums": [{"Percent":0}],
+    "Shortcuts": "nc, nor",
+    "Sprite": 2
+  }
+]

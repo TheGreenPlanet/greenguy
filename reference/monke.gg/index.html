@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <title>monke.gg | pDKO Percents & more!</title>
+    <link rel="stylesheet" type="text/css" href="main.css?v=2_20_26v2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <script id="stagesJSON" src="stages.json?v=1_9_25" type="application/json"></script>
+    <script src="bot.js?v=2_20_26v2" type="text/javascript" async></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="description" content="monke.gg is a tool to quickly lookup information about fighting characters as Donkey Kong in Super Smash Bros. Ultimate.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="monke.gg" />
+    <meta name="twitter:description" content="A tool for looking up information about fighting characters as Donkey Kong." />
+    <meta name="twitter:image" content="https://monke.gg/thumbnail.png" />
+    <meta property="og:title" content="monke.gg">
+    <meta property="og:description" content="A tool for looking up information about fighting characters as Donkey Kong.">
+    <meta property="og:image" content="https://monke.gg/thumbnail.png">
+    <meta property="og:url" content="https://monke.gg/">
+    <meta name="theme-color" content="#000000"/>
+    <meta name="color-scheme" content="light dark"/>
+    <script>
+        (function() {
+            var stored = localStorage.getItem('theme');
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            var theme = stored || (prefersDark ? 'dark' : 'light');
+            document.documentElement.setAttribute('data-theme', theme);
+            var meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.content = theme === 'dark' ? '#000000' : '#f5f5f0';
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <img src="logo_transparent.webp" alt="monke.gg logo">
+        <div role="button" class="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">☀</div>
+        <script>
+            (function() {
+                var theme = document.documentElement.getAttribute('data-theme') || 'dark';
+                var el = document.querySelector('.themeToggle');
+                if (el) el.textContent = theme === 'dark' ? '☀' : '🌙';
+            })();
+        </script>
+        <div role="button" class="infoButton" onclick="toggleInfo()" alt="Information Page">?</div>
+    </div>
+    <div class="main">
+        <div class = "inputContainer">
+            <input type="text" placeholder="Character" id="char" onchange 
+            onpropertychange 
+            onkeyuponpaste oninput="if (typeof updateStage === 'function') updateStage();" autofocus/>
+            <button class="clearBtn" onclick="clearAndFocus('char')" tabindex="-1" alt="Clear character input field">&nbsp;</button>
+        </div>
+        <br />
+        <div class = "inputContainer">
+            <input type="text" placeholder="Stage" id="stage" onchange 
+            onpropertychange 
+            onkeyuponpaste oninput="if (typeof updateStage === 'function') updateStage();" />
+            <button class="clearBtn" onclick="clearAndFocus('stage')" tabindex="-1" alt="Clear stage input field">&nbsp;</button>
+        </div>
+        <br>
+        <div id="loading" class="loading">
+            Loading<br>
+            <div class="loadingContainer">
+                <div id="loadingBar" class="loadingBar">&nbsp;</div>
+            </div>
+        </div>
+        <div id="infoBody" class="infoBodyHidden">
+            <div class="icons">
+                <div class="charIcons">
+                    <div class="charIco" style="background-position-x: -700px;"></div>
+                </div>
+                <div class="stageContainer">
+                    <div id="stageIco">&nbsp;</div>
+                </div>
+            </div>
+            <div id="charTitle" class="charTitle">Donkey Kong</div>
+            <div id="stageName" class="stageName">Pokémon Stadium 2</div>
+            <div class="charInfo">
+            </div>
+
+            <div class="footer">
+
+                <div class="footerContainer">created by sethExpress
+
+                    <a href="https://discord.com/users/162386017423196160" class="social" target="_blank" title="Discord">
+                        <button>
+                            <img src="discord.webp" alt="Discord">
+                        </button>
+                    </a>
+                    <a href="https://x.com/sethExpress" class="social" target="_blank" title="Twitter / X">
+                        <button>
+                            <img src="twitter.webp" alt="Twitter / X">
+                        </button>
+                    </a>
+
+                </div>
+
+                <div class="dataCredit">
+                    pDKO percents courtesy of <b><a href="https://x.com/_DKwill" target="_blank">DKwill</a></b><br>
+                    other data labbed by Kite, Proctavia, HotHeadJabs, Big O, and Mr. Clean
+                    <br>
+                    <a href="https://monke.gg/chart.png" target="_blank" rel="noopener noreferrer">Click here to access iDK's pDKO chart graphic.</a>
+                </div>
+
+                <br>
+
+                <a href="https://buymeacoffee.com/monkegg" target="_blank">
+                    <div role="button" class="donate">Tip monke.gg</div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="info">
+        <div class="backButton" onclick="goBack();">Go Back</div>
+        <span class="questionTitle">What is monke.gg?</span>
+        <p>monke.gg is a tool that allows you to look up information about characters in Super Smash Bros. Ultimate when fighting as Donkey Kong.</p>
+
+        <br>
+
+        <span class="questionTitle">What are pDKO, gDKO, aDKO, etc?</span>
+        <p>DKO, also known as Ding Dong, is Donkey Kong's iconic kill confirm where you grab, cargo up throw, and up air to kill. These are the variations:<br>
+            <table class="questionList">
+                <tr>
+                    <td width="40%"><b>p (platform) DKO:</b></td>
+                    <td>
+                        Cargo carry opponent to a platform → cargo up throw right before you land → jump → double jump → up air
+                        <a href="https://www.youtube.com/watch?v=7Gkl3gru-wc&list=PLN4qurnN8IxNHY_uMZtUzXRynS0eS2BSh&index=1" class="exampleBtn" target="_blank" rel="noopener noreferrer">Watch Example</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%"><b>g (grounded) DKO:</b></td>
+                    <td>
+                        Cargo → cargo up throw from the ground → jump → double jump → up air
+                        <a href="https://www.youtube.com/watch?v=5ftO9KpQmdE&list=PLN4qurnN8IxNHY_uMZtUzXRynS0eS2BSh&index=3" class="exampleBtn" target="_blank" rel="noopener noreferrer">Watch Example</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%"><b>a (aerial) DKO:</b></td>
+                    <td>
+                        Cargo → jump → rising cargo up throw → double jump → up air
+                        <a href="https://www.youtube.com/watch?v=uuk1aYFnw30&list=PLN4qurnN8IxNHY_uMZtUzXRynS0eS2BSh&index=5" class="exampleBtn" target="_blank" rel="noopener noreferrer">Watch Example</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%"><b>gp (grounded from a platform) DKO:</b></td>
+                    <td>
+                        Cargo → cargo up throw from the ground (on a platform) → jump → double jump → up air
+                        <a href="https://www.youtube.com/watch?v=yCGD6qXyEt8&list=PLN4qurnN8IxNHY_uMZtUzXRynS0eS2BSh&index=2" class="exampleBtn" target="_blank" rel="noopener noreferrer">Watch Example</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td width="40%"><b>ap (aerial from a platform) DKO:</b></td>
+                    <td>(on a platform) Cargo → jump → rising cargo up throw → double jump → up air
+                    <a href="https://www.youtube.com/watch?v=0BdFdrV0mQM&list=PLN4qurnN8IxNHY_uMZtUzXRynS0eS2BSh&index=4" class="exampleBtn" target="_blank" rel="noopener noreferrer">Watch Example</a>
+                </td>
+                </tr>
+                <tr>
+                    <td width="40%"><b>How to perform:</b></td>
+                    <td><a href="https://discord.com/invite/qMzMf8g" class="link" target="_blank" rel="noopener noreferrer">Join the DK discord and check the #pdko channel to learn more.</a>
+                </td>
+                </tr>
+            </table>
+        </p>
+
+        <br>
+
+        <span class="questionTitle">How does rage affect DKO?</span>
+        <p>When looking up percents, it is important to factor in how rage shrinks DKO ranges. The general rule of thumb is below: (these are rough estimates)</p>
+        <table class="rageTable">
+            <tr>
+                <td><b>Your Percent</b></td><td><b>Window Minimum</b></td>
+            </tr>
+            <tr>
+                <td>50%</td><td>-2%</td>
+            </tr>
+            <tr>
+                <td>100%</td><td>-8%</td>
+            </tr>
+            <tr>
+                <td>150%</td><td>-15%</td>
+            </tr>
+        </table>
+
+        <p>For example, if you are fighting <a class="lmao" href="">Link</a>, who has a pDKO window of 73 - 83, and you have 50% rage, you can pDKO as early as 71%.
+            For the maximums, there is no general rule of thumb since it is on a per-character basis.
+        </p>
+
+        <br>
+
+        <span class="questionTitle">How does staling affect DKO?</span>
+        <p>
+        This raises the window, but also widens it. E.g. for Bayonetta, one staled cargo up throw would change her range from 61-74 to ~64-80.
+        The first use of cargo up throw and/or Uair stales the most, due to removing freshness bonus.
+        For a technical explanation: Staling reduces the total knockback by a given %. Higher percent (health) means more total knockback, which means the staling cuts off a bigger raw value for maximums compared to minimums.
+        </p>
+        <br>
+
+        <span class="questionTitle">What do the brackets [] mean?</span>
+        <p>The number located in the brackets [] is an even lower minimum percent that you can kill at via an advanced DK tech known as "optimized pDKO". 
+            This is performed by tossing an opponent at the peak of your jump. This allows you to achieve slightly earlier kills for the obvious reason that your opponent is released at a higher point, and is thus closer to the top blast zone.
+            <a href="https://clips.twitch.tv/FrigidConsiderateHabaneroFutureMan-0yuDWPtTIuHjZMX5" class="link" target="_blank" rel="noopener noreferrer">Here is an example of DKwill performing an optimized pDKO.</a>
+        </p>
+
+        <br>
+
+        <span class="questionTitle">What do the blue numbers mean?</span>
+        <p>pDKO percent ranges can change slightly depending on what height the platforms are, and how tall the stage blastzone is.
+            When you input a stage into the calculator, these changes will be reflected by the blue numbers. This number will be based on the base PS2 percents.
+            For example. Donkey Kong's range on Pokémon Stadium 2 is 84 - 95. On Small Battlefield, the platforms add +2 to the minimum, so the new percent range is 86 - 95.
+        </p>
+
+    </div>
+</body>

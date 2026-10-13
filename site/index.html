@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>greenguy.gg | Luigi ZTD Percents & more</title>
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <link rel="stylesheet" type="text/css" href="site.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="description" content="Look up Luigi's zero-to-death windows and kill confirm percents for every character and stage in Super Smash Bros. Ultimate.">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <meta name="theme-color" content="#000000"/>
+    <meta name="color-scheme" content="light dark"/>
+    <script>
+        (function() {
+            var stored = null;
+            try { stored = localStorage.getItem('theme'); } catch (e) {}
+            var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            document.documentElement.setAttribute('data-theme', stored || (prefersDark ? 'dark' : 'light'));
+        })();
+    </script>
+</head>
+
+<body>
+    <div class="header">
+        <div class="siteLogo">greenguy<span>.gg</span></div>
+        <div role="button" class="themeToggle" onclick="toggleTheme()" title="Toggle light/dark mode" aria-label="Toggle light/dark mode">☀</div>
+        <div role="button" class="infoButton" onclick="toggleInfo()" aria-label="Information page">?</div>
+    </div>
+
+    <div class="main">
+        <div class="inputContainer">
+            <input type="text" placeholder="Character" id="char" autocomplete="off" autocapitalize="off" spellcheck="false" autofocus />
+            <button class="clearBtn" onclick="clearAndFocus('char')" tabindex="-1" aria-label="Clear character input">&nbsp;</button>
+        </div>
+        <div class="chips" id="charChips"></div>
+
+        <div class="inputContainer">
+            <input type="text" placeholder="Stage" id="stage" autocomplete="off" autocapitalize="off" spellcheck="false" />
+            <button class="clearBtn" onclick="clearAndFocus('stage')" tabindex="-1" aria-label="Clear stage input">&nbsp;</button>
+        </div>
+        <div class="chips" id="stageChips"></div>
+
+
+        <div id="infoBody" class="infoBody">
+            <div class="icons">
+                <div class="charIcons"></div>
+                <div class="stageContainer"><div id="stageIco">&nbsp;</div></div>
+            </div>
+            <div id="charTitle" class="charTitle"></div>
+            <div id="stageName" class="stageName"></div>
+            <div class="charInfo"></div>
+
+            <div class="footer">
+                <div class="dataCredit">
+                    ZTD plans: <b>Project L</b> by <b>Venus</b> (thanks to CrimsonStarfall, Réhann &amp; Schlog)<br>
+                    Up B / Utilt / Nair / Dthrow data: <b>Luigi Up-B Stuff &amp; Setups</b>, <b>Luigi's Mansion – The Data Compendium</b><br>
+                    Layout inspired by <a href="https://monke.gg" target="_blank" rel="noopener noreferrer">monke.gg</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info">
+        <div class="backButton" onclick="goBack();">Go Back</div>
+
+        <span class="questionTitle">What is this?</span>
+        <p>A quick lookup for Luigi in Super Smash Bros. Ultimate. Type a character and a stage; the page shows Luigi's
+           <b>zero-to-death (ZTD)</b> window for that character, which combo to use at which percent, and the windows for his
+           other kill confirms.</p>
+        <br>
+
+        <span class="questionTitle">How do I read the ZTD box?</span>
+        <p>Down throw, then follow the sequence listed for the opponent's percent. Two kinds of routes are shown, both
+           for DI out (the common DI): the dair → nair → dair routes at low percents, and the short
+           dthrow → (DI guess) dair → uair / wBair / zair / ff → Up B route at higher percents. Windows don't overlap.
+           A gap between windows means that stretch uses a longer route that isn't shown. The full sheet, including
+           those routes and DI in, is in the data.</p>
+        <table class="questionList">
+            <tr><td width="22%"><b>ff</b></td><td>fast fall (e.g. "dair ff up B")</td></tr>
+            <tr><td><b>SH / FH</b></td><td>short hop / full hop</td></tr>
+            <tr><td><b>DJ</b></td><td>double jump</td></tr>
+            <tr><td><b>r</b></td><td>reverse (rUair = reverse up air)</td></tr>
+            <tr><td><b>w</b></td><td>weak (wBair = weak back air, wUair = weak up air)</td></tr>
+            <tr><td><b>ffnair</b></td><td>fast-falling the nair</td></tr>
+        </table>
+        <br>
+
+        <span class="questionTitle">Forms and variants</span>
+        <p>Characters with multiple forms get a labelled group (Hero: Accelerate / Oomph, Wii Fit Trainer: Deep Breathing,
+           Mario: Battlefield). The Pokémon Trainer tab isn't labelled in the source; Squirtle / Charizard / Ivysaur were
+           assigned by their Up B kill percents.</p>
+        <br>
+
+        <span class="questionTitle">Stages</span>
+        <p>The ZTD windows are not stage-adjusted. The Dthrow → Up B lab lists per-stage ceiling and platform
+           adjustments; those show up under that combo when a stage is selected.</p>
+        <br>
+
+        <span class="questionTitle">Dtilt combos</span>
+        <p>Dtilt → Fair and Dtilt → Uair windows come from the "Dtilt Busted" sheets. Rage lowers the required percent
+           by about 1% roughly every 10% of rage starting at 40 (e.g. Bowser: 20% at 0 rage, 19% at 40, 18% at 50).
+           A "…" after a window means the combo might still work at later percents but isn't useful in a match.</p>
+        <br>
+
+        <span class="questionTitle">Rage</span>
+        <table class="rageTable">
+            <tr><td><b>Dthrow → Up B</b></td><td><b>Window minimum</b></td></tr>
+            <tr><td>50%</td><td>−1 to −2%</td></tr>
+            <tr><td>75%</td><td>−4 to −5%</td></tr>
+            <tr><td>100%</td><td>−7 to −8%</td></tr>
+            <tr><td>125%</td><td>−10 to −11%</td></tr>
+            <tr><td>150%</td><td>−13 to −14%</td></tr>
+        </table>
+        <br>
+
+        <span class="questionTitle">Difficulty</span>
+        <p>Only Dthrow → Up B has difficulty labels (Hard / Very hard). Nothing else in the lab data rates difficulty yet.</p>
+        <br>
+
+        <span class="questionTitle">Missing data</span>
+        <p>Dthrow → Cyclone only has Mario so far and Nair → Cyclone isn't labbed at all. Those rows show as
+           "not labbed yet".</p>
+    </div>
+
+    <script src="data.js?v=19" charset="utf-8"></script>
+    <script src="app.js?v=19" charset="utf-8"></script>
+</body>
+</html>

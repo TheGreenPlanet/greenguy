@@ -1,0 +1,79 @@
+{
+  "title": "Dthrow → Utilt",
+  "source": "Down Throw Up tilt Confirm (Luigi Discord). Hits both DI consistently, unless noted.",
+  "entries": {
+    "Mario": {
+      "window": "30-36%",
+      "notes": []
+    },
+    "Donkey Kong": {
+      "window": "44-46%",
+      "notes": [
+        "42-43% Up B kills on bad DI",
+        "47% Up tilt tumble, still possible"
+      ]
+    },
+    "Link": {
+      "window": "33-40%",
+      "notes": [
+        "41% Up tilt tumble, still possible on DI out",
+        "40% DI in specific timing Dthrow > Up tilt, still possible"
+      ]
+    },
+    "Samus": {
+      "window": "36-41%",
+      "notes": [
+        "34-35% kinda hard to hit on DI out",
+        "42-43% Up tilt tumble, still possible on DI out"
+      ]
+    },
+    "Yoshi": {
+      "window": "35-40%",
+      "notes": [
+        "35-39% DI in"
+      ]
+    },
+    "Kirby": {
+      "window": "24-32%",
+      "notes": [
+        "24-30% DI in",
+        "31% can be Dthrow, Up tilt, Up air, Up air > WUair Bair"
+      ]
+    },
+    "Pikachu": {
+      "window": "27-32%",
+      "notes": [
+        "27-31% DI in"
+      ]
+    },
+    "Luigi": {
+      "window": "33-34%",
+      "notes": [
+        "30-34% DI in",
+        "30-34% consistently if they don't mash Cyclone",
+        "29% Up B kills on bad DI",
+        "If Cyclone wins against Up air, you can punish it, because Cyclone didn't catch you"
+      ]
+    },
+    "Ness": {
+      "window": "29-37%",
+      "notes": [
+        "37% DI in can hit WNair but still combo into Up B kill"
+      ]
+    },
+    "Captain Falcon": {
+      "window": "34-40%",
+      "notes": [
+        "41% Up tilt tumble, still possible on DI out, DI in harder to hit"
+      ]
+    },
+    "Jigglypuff": {
+      "window": "23-24%",
+      "notes": [
+        "if they don't mash Rest",
+        "25-26% true combo but Nair sends too high, maybe use Cyclone(?)"
+      ]
+    }
+  },
+  "seq": "Dthrow → Utilt → full hop Uair → Nair (on platform) → Up B"
+}

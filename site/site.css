@@ -1,0 +1,123 @@
+/* Overrides and additions on top of main.css (copied from the monke.gg reference). */
+:root {
+	--percent-highlight: #5dff8a;
+	--stage-name: #b6f5c4;
+	--accent: #3ecf6a;
+	--dim: 0.45;
+}
+
+[data-theme="light"] {
+	--percent-highlight: #17803a;
+	--stage-name: #1f6b36;
+	--accent: #1f9a48;
+}
+
+.siteLogo {
+	font-size: 28px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	padding: 6px 0;
+	color: var(--text-primary);
+}
+
+.siteLogo span {
+	color: var(--accent);
+}
+
+.chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	justify-content: center;
+	min-height: 8px;
+	margin: 6px 0 10px;
+}
+
+.chips button {
+	background: var(--bg-input);
+	border: 1px solid var(--border-subtle);
+	border-radius: 14px;
+	color: var(--text-secondary);
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 13px;
+	padding: 3px 10px;
+}
+
+.chips button:hover {
+	background: var(--btn-hover-bg);
+	color: #fff;
+}
+
+.optionRow {
+	align-items: center;
+	display: flex;
+	gap: 12px;
+	justify-content: center;
+	margin: 6px 0 14px;
+}
+
+.optionRow input[type="number"] {
+	background: var(--bg-input);
+	border: 1px solid var(--border-color);
+	border-radius: 8px;
+	color: var(--text-primary);
+	font-family: inherit;
+	font-size: 16px;
+	padding: 8px 10px;
+	width: 170px;
+}
+
+.modeToggle button {
+	background: var(--bg-input);
+	border: 1px solid var(--border-color);
+	color: var(--text-secondary);
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 15px;
+	padding: 8px 14px;
+}
+
+.modeToggle button:first-child { border-radius: 8px 0 0 8px; }
+.modeToggle button:last-child { border-radius: 0 8px 8px 0; border-left: 0; }
+.modeToggle button.on { background: var(--accent); border-color: var(--accent); color: #000; font-weight: bold; }
+
+.sectionTitle {
+	color: var(--question-title);
+	font-size: 14px;
+	letter-spacing: 1px;
+	margin: 18px 0 4px;
+	text-transform: uppercase;
+}
+
+.ztdHeadline .percentRange { padding-bottom: 0; }
+.ztdUse { color: var(--percent-highlight); font-size: 16px; font-weight: bold; margin-bottom: 6px; }
+.ztdSub { color: var(--text-secondary); font-size: 14px; margin-bottom: 8px; }
+
+.moreInfo-row.dim { opacity: var(--dim); }
+.moreInfo-row.active .moreInfo-title { box-shadow: inset 4px 0 0 var(--accent); }
+
+.lbl { color: var(--text-secondary); font-size: 12px; margin-right: 6px; text-transform: uppercase; }
+.sub { display: block; font-size: 15px; }
+.noData { color: var(--credit-color); font-style: italic; }
+
+.badge {
+	border-radius: 10px;
+	display: inline-block;
+	font-size: 12px;
+	font-weight: bold;
+	margin-top: 4px;
+	padding: 1px 8px;
+}
+.badge.hard { background: #8a5a00; color: #fff; }
+.badge.vhard { background: #9a3e3e; color: #fff; }
+
+.infoBody { margin-bottom: 40px; }
+
+.questionList td { padding: 4px 6px; vertical-align: top; }
+.questionList .seq { color: var(--text-secondary); font-size: 14px; }
+
+.valBody { width: 100%; line-height: 1.5; }
+.header { justify-content: center; }
+
+.moreInfo-value-note { max-width: none; margin-top: 6px; }
