@@ -1,5 +1,10 @@
 /* Overrides and additions on top of main.css (copied from the monke.gg reference). */
 :root {
+	--tier4: #ff5c5c;
+	--easy: #3ecf6a;
+	--medium: #ffe14d;
+	--hard: #ff9f1a;
+	--crouch: #4fd1ff;
 	--percent-highlight: #5dff8a;
 	--stage-name: #b6f5c4;
 	--accent: #3ecf6a;
@@ -7,6 +12,11 @@
 }
 
 [data-theme="light"] {
+	--tier4: #c62828;
+	--easy: #1f9a48;
+	--medium: #9a8b00;
+	--hard: #c45f00;
+	--crouch: #0a6fa0;
 	--percent-highlight: #17803a;
 	--stage-name: #1f6b36;
 	--accent: #1f9a48;
@@ -121,3 +131,19 @@
 .header { justify-content: center; }
 
 .moreInfo-value-note { max-width: none; margin-top: 6px; }
+
+.crouchNote { color: var(--crouch); font-size: 16px; font-weight: bold; margin: 10px 0 0; }
+.crouchNote .lbl { color: var(--crouch); display: block; font-size: 12px; letter-spacing: 1px; opacity: 0.85; }
+
+.ledge-easy { color: var(--easy); font-weight: bold; }
+.ledge-medium { color: var(--medium); font-weight: bold; }
+.ledge-hard { color: var(--hard); font-weight: bold; }
+
+.tier-1 { color: var(--easy); font-weight: bold; }
+.tier-2 { color: var(--medium); font-weight: bold; }
+.tier-3 { color: var(--hard); font-weight: bold; }
+.tier-4 { color: var(--tier4); font-weight: bold; }
+
+.gp-do { color: var(--easy); font-weight: bold; }
+.gp-dont { color: var(--tier4); font-weight: bold; }
+.valBody .sub { margin: 0 0 6px; text-align: left; }

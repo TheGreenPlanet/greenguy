@@ -1,0 +1,1780 @@
+{
+"sheet": "Shield Poke",
+"cells": {
+"G1": [
+"Easy",
+null
+],
+"H1": [
+"Needs Spacing",
+null
+],
+"I1": [
+"Strict Spacing",
+null
+],
+"J1": [
+"2hits to Poke",
+null
+],
+"K1": [
+"Can't Poke",
+null
+],
+"A2": [
+"Character",
+"FF6D9EEB"
+],
+"B2": [
+"Front Foot",
+"FF6D9EEB"
+],
+"C2": [
+"Back Foot",
+"FF6D9EEB"
+],
+"D2": [
+"Head",
+"FF6D9EEB"
+],
+"F2": [
+"Floor",
+"FF6D9EEB"
+],
+"G2": [
+"tier 1",
+"FF00B300"
+],
+"H2": [
+"tier 2",
+"FFFFF225"
+],
+"I2": [
+"tier 3",
+"FFFF9900"
+],
+"J2": [
+"tier 4",
+"FFCC0000"
+],
+"K2": [
+null,
+"FF666666"
+],
+"A3": [
+"Mario",
+"FFA4C2F4"
+],
+"B3": [
+null,
+"FFFFFF00"
+],
+"C3": [
+null,
+"FF00B300"
+],
+"D3": [
+null,
+"FFFFFF00"
+],
+"F3": [
+"Dtilt/Uair>SH>Fair",
+"FFFFFF00"
+],
+"G3": [
+"Check notes for additional poking options",
+null
+],
+"A4": [
+"Donkey Kong",
+"FFA4C2F4"
+],
+"B4": [
+null,
+"FF666666"
+],
+"C4": [
+null,
+"FFFFFF00"
+],
+"D4": [
+null,
+"FFFF9900"
+],
+"F4": [
+"Nair > rwUair",
+"FFFF9900"
+],
+"A5": [
+"Link",
+"FFA4C2F4"
+],
+"B5": [
+null,
+"FF666666"
+],
+"C5": [
+null,
+"FFFF9900"
+],
+"D5": [
+null,
+"FF00B300"
+],
+"F5": [
+"Dtilt/Uair > Fair",
+"FF00B300"
+],
+"A6": [
+"Samus",
+"FFA4C2F4"
+],
+"B6": [
+null,
+"FFCC0000"
+],
+"C6": [
+null,
+"FFFF9900"
+],
+"D6": [
+null,
+"FFFF9900"
+],
+"F6": [
+"Nair > Fair",
+"FF00B300"
+],
+"A7": [
+"Dark Samus",
+"FFA4C2F4"
+],
+"B7": [
+null,
+"FFFFFF00"
+],
+"C7": [
+null,
+"FFFFFF00"
+],
+"D7": [
+null,
+"FF00B300"
+],
+"F7": [
+"Nair > Uair/Fair",
+"FF00B300"
+],
+"A8": [
+"Yoshi",
+"FFA4C2F4"
+],
+"B8": [
+null,
+"FF666666"
+],
+"C8": [
+null,
+"FF666666"
+],
+"D8": [
+null,
+"FF666666"
+],
+"F8": [
+null,
+"FF666666"
+],
+"A9": [
+"Kirby",
+"FFA4C2F4"
+],
+"B9": [
+null,
+"FFCC0000"
+],
+"C9": [
+null,
+"FFFF9900"
+],
+"D9": [
+null,
+"FFFF9900"
+],
+"F9": [
+"Nair > wDair",
+"FFFF9900"
+],
+"A10": [
+"Fox",
+"FFA4C2F4"
+],
+"B10": [
+null,
+"FF00B300"
+],
+"C10": [
+null,
+"FF00B300"
+],
+"D10": [
+null,
+"FFFFFF00"
+],
+"F10": [
+"Nair/Uair>SH>Fair",
+"FFFFFF00"
+],
+"A11": [
+"Pikachu",
+"FFA4C2F4"
+],
+"B11": [
+null,
+"FFCC0000"
+],
+"C11": [
+null,
+"FFFF9900"
+],
+"D11": [
+null,
+"FFFF9900"
+],
+"F11": [
+"Nair > wDair",
+"FFFF9900"
+],
+"A12": [
+"Luigi",
+"FFA4C2F4"
+],
+"B12": [
+null,
+"FFFF9900"
+],
+"C12": [
+null,
+"FF00B300"
+],
+"D12": [
+null,
+"FF00B300"
+],
+"F12": [
+"Nair > Bair",
+"FF00B300"
+],
+"A13": [
+"Ness",
+"FFA4C2F4"
+],
+"B13": [
+null,
+"FFFF9900"
+],
+"C13": [
+null,
+"FF00B300"
+],
+"D13": [
+null,
+"FFFFFF00"
+],
+"F13": [
+"Dtilt/Uair>SH>Fair",
+"FFFFFF00"
+],
+"A14": [
+"Captain Falcon",
+"FFA4C2F4"
+],
+"B14": [
+null,
+"FFFFFF00"
+],
+"C14": [
+null,
+"FF00B300"
+],
+"D14": [
+null,
+"FFFFFF00"
+],
+"F14": [
+"Uair/Nair > Uair/Fair",
+"FF00B300"
+],
+"A15": [
+"Jigglypuff",
+"FFA4C2F4"
+],
+"B15": [
+null,
+"FFCC0000"
+],
+"C15": [
+null,
+"FFFF9900"
+],
+"D15": [
+null,
+"FFFFFF00"
+],
+"F15": [
+"Nair > wDair",
+"FFFFFF00"
+],
+"A16": [
+"Peach/Daisy",
+"FFA4C2F4"
+],
+"B16": [
+null,
+"FFFF9900"
+],
+"C16": [
+null,
+"FFFF9900"
+],
+"D16": [
+null,
+"FF00B300"
+],
+"F16": [
+"Dtilt/Uair>SH>Fair",
+"FFFFFF00"
+],
+"A17": [
+"Bowser",
+"FFA4C2F4"
+],
+"B17": [
+null,
+"FFCC0000"
+],
+"C17": [
+null,
+"FFFFFF00"
+],
+"D17": [
+null,
+"FFCC0000"
+],
+"F17": [
+"Uair > wDair",
+"FF00B300"
+],
+"G17": [
+"Front hand first to poke",
+null
+],
+"A18": [
+"Ice Climbers",
+"FFA4C2F4"
+],
+"B18": [
+null,
+"FF00B300"
+],
+"C18": [
+null,
+"FFFF9900"
+],
+"D18": [
+null,
+"FFCC0000"
+],
+"F18": [
+"Uair > wDair",
+"FF00B300"
+],
+"G18": [
+"Front hand first to poke",
+null
+],
+"I18": [
+"Nana's shield prevents poking from behind",
+null
+],
+"A19": [
+"Sheik",
+"FFA4C2F4"
+],
+"B19": [
+null,
+"FFCC0000"
+],
+"C19": [
+null,
+"FFFF9900"
+],
+"D19": [
+null,
+"FFCC0000"
+],
+"F19": [
+"Uair > Dtilt > SH Bair",
+"FFCC0000"
+],
+"G19": [
+"TBH Just break it. Landing rUair > Dsmash",
+null
+],
+"A20": [
+"Zelda",
+"FFA4C2F4"
+],
+"B20": [
+null,
+"FFCC0000"
+],
+"C20": [
+null,
+"FFFF9900"
+],
+"D20": [
+null,
+"FFFFFF00"
+],
+"F20": [
+"Nair>Dash Uair",
+"FFFFFF00"
+],
+"A21": [
+"Dr. Mario",
+"FFA4C2F4"
+],
+"B21": [
+null,
+"FFFFFF00"
+],
+"C21": [
+null,
+"FF00B300"
+],
+"D21": [
+null,
+"FFFFFF00"
+],
+"F21": [
+"Dtilt/Uair>SH>Fair",
+"FFFFFF00"
+],
+"A22": [
+"Pichu",
+"FFA4C2F4"
+],
+"B22": [
+null,
+"FFFFFF00"
+],
+"C22": [
+null,
+"FF00B300"
+],
+"D22": [
+null,
+"FFFF9900"
+],
+"F22": [
+"Nair/Uair>wDair",
+"FFFFFF00"
+],
+"A23": [
+"Falco",
+"FFA4C2F4"
+],
+"B23": [
+null,
+"FFCC0000"
+],
+"C23": [
+null,
+"FFCC0000"
+],
+"D23": [
+null,
+"FFCC0000"
+],
+"F23": [
+"Nair>Fair",
+"FFFFFF00"
+],
+"A24": [
+"Marth/Lucina",
+"FFA4C2F4"
+],
+"B24": [
+null,
+"FF00B300"
+],
+"C24": [
+null,
+"FF00B300"
+],
+"D24": [
+null,
+"FF00B300"
+],
+"F24": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"A25": [
+"Young Link",
+"FFA4C2F4"
+],
+"B25": [
+null,
+"FFCC0000"
+],
+"C25": [
+null,
+"FFFFFF00"
+],
+"D25": [
+null,
+"FFFFFF00"
+],
+"F25": [
+"Nair > SH > Fair",
+"FFFFFF00"
+],
+"A26": [
+"Ganondorf",
+"FFA4C2F4"
+],
+"B26": [
+null,
+"FFFF9900"
+],
+"C26": [
+null,
+"FF00B300"
+],
+"D26": [
+null,
+"FFFF9900"
+],
+"F26": [
+"Nair/Uair > rwUair",
+"FFFFFF00"
+],
+"A27": [
+"Mewtwo",
+"FFA4C2F4"
+],
+"B27": [
+null,
+"FF00B300"
+],
+"C27": [
+null,
+"FFFFFF00"
+],
+"D27": [
+null,
+"FFFFFF00"
+],
+"F27": [
+"Nair > Sh > Fair/Uair",
+"FFFFFF00"
+],
+"A28": [
+"Roy/Chrom",
+"FFA4C2F4"
+],
+"B28": [
+null,
+"FF00B300"
+],
+"C28": [
+null,
+"FF00B300"
+],
+"D28": [
+null,
+"FF00B300"
+],
+"F28": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"G28": [
+"Uair only hits from behind",
+null
+],
+"A29": [
+"Mr. G&W",
+"FFA4C2F4"
+],
+"B29": [
+null,
+"FF00B300"
+],
+"C29": [
+null,
+"FF00B300"
+],
+"D29": [
+null,
+"FFFF9900"
+],
+"F29": [
+"Nair > Bair",
+"FF00B300"
+],
+"G29": [
+"Good Luck not getting Up B'd",
+null
+],
+"A30": [
+"Meta Knight",
+"FFA4C2F4"
+],
+"B30": [
+null,
+"FFCC0000"
+],
+"C30": [
+null,
+"FFCC0000"
+],
+"D30": [
+null,
+"FFCC0000"
+],
+"F30": [
+"Nair > Utilt",
+"FFFFFF00"
+],
+"G30": [
+"Front hand first to poke",
+null
+],
+"A31": [
+"(Dark) Pit",
+"FFA4C2F4"
+],
+"B31": [
+null,
+"FFFF9900"
+],
+"C31": [
+null,
+"FFCC0000"
+],
+"D31": [
+null,
+"FFFFF225"
+],
+"F31": [
+"Nair/Uair> SH > Fair",
+"FFFFFF00"
+],
+"A32": [
+"Zero Suit Samus",
+"FFA4C2F4"
+],
+"B32": [
+null,
+"FF00B300"
+],
+"C32": [
+null,
+"FF00B300"
+],
+"F32": [
+"Nair > SH > Fair",
+"FFFFFF00"
+],
+"A33": [
+"Wario",
+"FFA4C2F4"
+],
+"B33": [
+null,
+"FF00B300"
+],
+"C33": [
+null,
+"FF00B300"
+],
+"D33": [
+null,
+"FFFFFF00"
+],
+"F33": [
+"Nair > SH > Fair",
+"FFFFFF00"
+],
+"G33": [
+"Front hand pokeable",
+null
+],
+"A34": [
+"Snake",
+"FFA4C2F4"
+],
+"B34": [
+null,
+"FFCC0000"
+],
+"C34": [
+null,
+"FFFF9900"
+],
+"D34": [
+null,
+"FFFFFF00"
+],
+"F34": [
+"Nair/Uair > Fair",
+"FF00B300"
+],
+"A35": [
+"Ike",
+"FFA4C2F4"
+],
+"B35": [
+null,
+"FF00B300"
+],
+"C35": [
+null,
+"FFFFFF00"
+],
+"D35": [
+null,
+"FF00B300"
+],
+"F35": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"G35": [
+"Uair only hits from behind",
+null
+],
+"A36": [
+"Squirtle",
+"FFA4C2F4"
+],
+"B36": [
+null,
+"FFCC0000"
+],
+"C36": [
+null,
+"FFCC0000"
+],
+"D36": [
+null,
+"FFCC0000"
+],
+"F36": [
+"Bair > wDair",
+"FFFFFF00"
+],
+"A37": [
+"Ivysaur",
+"FFA4C2F4"
+],
+"B37": [
+null,
+"FFFF9900"
+],
+"C37": [
+null,
+"FF00B300"
+],
+"D37": [
+null,
+"FFFFF225"
+],
+"F37": [
+"Nair > SH > Fair",
+"FFFFFF00"
+],
+"A38": [
+"Charizard",
+"FFA4C2F4"
+],
+"B38": [
+null,
+"FFCC0000"
+],
+"C38": [
+null,
+"FFCC0000"
+],
+"D38": [
+null,
+"FFCC0000"
+],
+"F38": [
+"Uair > Dtilt >SH>Fair",
+"FFCC0000"
+],
+"G38": [
+"break it. Landing rUair > Dsmash",
+null
+],
+"A39": [
+"Diddy Kong",
+"FFA4C2F4"
+],
+"B39": [
+null,
+"FFCC0000"
+],
+"C39": [
+null,
+"FF00B300"
+],
+"D39": [
+null,
+"FFFFFF00"
+],
+"F39": [
+"Nair/Uair>wDair",
+"FFFFFF00"
+],
+"A40": [
+"Lucas",
+"FFA4C2F4"
+],
+"B40": [
+null,
+"FFFF9900"
+],
+"C40": [
+null,
+"FF00B300"
+],
+"D40": [
+null,
+"FFFFFF00"
+],
+"F40": [
+"Dtilt/Uair>SH>Fair",
+"FFFFFF00"
+],
+"A41": [
+"Sonic",
+"FFA4C2F4"
+],
+"B41": [
+null,
+"FF00B300"
+],
+"C41": [
+null,
+"FF00B300"
+],
+"D41": [
+null,
+"FFCC0000"
+],
+"F41": [
+"Bair > Sh > Fair",
+"FFFF9900"
+],
+"A42": [
+"King Dedede",
+"FFA4C2F4"
+],
+"B42": [
+null,
+"FFFF9900"
+],
+"C42": [
+null,
+"FFFF9900"
+],
+"D42": [
+null,
+"FFCC0000"
+],
+"F42": [
+"Uair > Dtilt >SH>Fair",
+"FFCC0000"
+],
+"A43": [
+"Olimar",
+"FFA4C2F4"
+],
+"B43": [
+null,
+"FF00B300"
+],
+"C43": [
+null,
+"FFFFFF00"
+],
+"D43": [
+null,
+"FFFFFF00"
+],
+"F43": [
+"Nair/Uair > wDair",
+"FFFFFF00"
+],
+"A44": [
+"Lucario",
+"FFA4C2F4"
+],
+"B44": [
+null,
+"FFCC0000"
+],
+"C44": [
+null,
+"FFCC0000"
+],
+"D44": [
+null,
+"FFFFFF00"
+],
+"F44": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A45": [
+"R.O.B",
+"FFA4C2F4"
+],
+"B45": [
+null,
+"FF00B300"
+],
+"C45": [
+null,
+"FF00B300"
+],
+"D45": [
+null,
+"FF00B300"
+],
+"F45": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A46": [
+"Toon Link",
+"FFA4C2F4"
+],
+"B46": [
+null,
+"FFFFFF00"
+],
+"C46": [
+null,
+"FFFFFF00"
+],
+"D46": [
+null,
+"FFFFFF00"
+],
+"F46": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A47": [
+"Wolf",
+"FFA4C2F4"
+],
+"B47": [
+null,
+"FFFFFF00"
+],
+"C47": [
+null,
+"FFCC0000"
+],
+"D47": [
+null,
+"FFFFFF00"
+],
+"F47": [
+"Nair/Uair > SH> Fair",
+"FFFFFF00"
+],
+"A48": [
+"Villager",
+"FFA4C2F4"
+],
+"B48": [
+null,
+"FFCC0000"
+],
+"C48": [
+null,
+"FFFF9900"
+],
+"D48": [
+null,
+"FFFFFF00"
+],
+"F48": [
+"Nair/Uair > SH> Fair",
+"FFFFFF00"
+],
+"A49": [
+"Megaman",
+"FFA4C2F4"
+],
+"B49": [
+null,
+"FFFFFF00"
+],
+"C49": [
+null,
+"FF00B300"
+],
+"D49": [
+null,
+"FF00B300"
+],
+"F49": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A50": [
+"Wii Fit Trainer",
+"FFA4C2F4"
+],
+"B50": [
+null,
+"FFFFFF00"
+],
+"C50": [
+null,
+"FFFF9900"
+],
+"D50": [
+null,
+"FFFFFF00"
+],
+"F50": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A51": [
+"Rosalina",
+"FFA4C2F4"
+],
+"B51": [
+null,
+"FF666666"
+],
+"C51": [
+null,
+"FF00B300"
+],
+"D51": [
+null,
+"FFFFFF00"
+],
+"F51": [
+"Nair/Uair > rwUair",
+"FFFFFF00"
+],
+"A52": [
+"Little Mac",
+"FFA4C2F4"
+],
+"B52": [
+null,
+"FFCC0000"
+],
+"C52": [
+null,
+"FFFF9900"
+],
+"D52": [
+null,
+"FFFF9900"
+],
+"F52": [
+"Nair > wDair",
+"FFFF9900"
+],
+"G52": [
+"Front hand pokeable",
+null
+],
+"A53": [
+"Greninja",
+"FFA4C2F4"
+],
+"B53": [
+null,
+"FFCC0000"
+],
+"C53": [
+null,
+"FFCC0000"
+],
+"D53": [
+null,
+"FFCC0000"
+],
+"F53": [
+"Nair > SH > wDair",
+"FFFF9900"
+],
+"G53": [
+"Crossup the wDair??",
+null
+],
+"A54": [
+"Palutena",
+"FFA4C2F4"
+],
+"B54": [
+null,
+"FF00B300"
+],
+"C54": [
+null,
+"FF00B300"
+],
+"D54": [
+null,
+"FFFF9900"
+],
+"F54": [
+"Nair> SH > Fair",
+"FFFF9900"
+],
+"A55": [
+"Pac-Man",
+"FFA4C2F4"
+],
+"B55": [
+null,
+"FFCC0000"
+],
+"C55": [
+null,
+"FFFF9900"
+],
+"D55": [
+null,
+"FFCC0000"
+],
+"F55": [
+"Uair > Dtilt >SH>Fair",
+"FFCC0000"
+],
+"A56": [
+"Robin",
+"FFA4C2F4"
+],
+"B56": [
+null,
+"FF00B300"
+],
+"C56": [
+null,
+"FF00B300"
+],
+"D56": [
+null,
+"FF00B300"
+],
+"F56": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"A57": [
+"Shulk",
+"FFA4C2F4"
+],
+"B57": [
+null,
+"FF00B300"
+],
+"C57": [
+null,
+"FF00B300"
+],
+"D57": [
+null,
+"FFFFFF00"
+],
+"F57": [
+"Nair/Uair > Fair",
+"FFFFFF00"
+],
+"G57": [
+"Aim for high elbow arm",
+null
+],
+"A58": [
+"Bowser Jr.",
+"FFA4C2F4"
+],
+"B58": [
+null,
+"FF00B300"
+],
+"C58": [
+null,
+"FF00B300"
+],
+"D58": [
+null,
+"FFFFFF00"
+],
+"F58": [
+"Nair/Uair > wDair",
+"FFFFFF00"
+],
+"G58": [
+"Aiming for front of mouth",
+null
+],
+"A59": [
+"Duck Hunt",
+"FFA4C2F4"
+],
+"B59": [
+null,
+"FFCC0000"
+],
+"C59": [
+null,
+"FFCC0000"
+],
+"D59": [
+null,
+"FFFFFF00"
+],
+"F59": [
+"Nair/Uair > wDair/Fair",
+"FFFFFF00"
+],
+"A60": [
+"Ryu/Ken",
+"FFA4C2F4"
+],
+"B60": [
+null,
+"FF00B300"
+],
+"C60": [
+null,
+"FF00B300"
+],
+"D60": [
+null,
+"FFFF9900"
+],
+"F60": [
+"Nair/Uair > Fair",
+"FFFF9900"
+],
+"A61": [
+"Cloud",
+"FFA4C2F4"
+],
+"B61": [
+null,
+"FFFFFF00"
+],
+"C61": [
+null,
+"FFFFFF00"
+],
+"D61": [
+null,
+"FF00B300"
+],
+"F61": [
+"Nair/Uair> Fair",
+"FF00B300"
+],
+"A62": [
+"Corrin",
+"FFA4C2F4"
+],
+"B62": [
+null,
+"FFFF9900"
+],
+"C62": [
+null,
+"FFFFFF00"
+],
+"D62": [
+null,
+"FF00B300"
+],
+"F62": [
+"Nair/Uair> Fair",
+"FF00B300"
+],
+"A63": [
+"Bayonetta",
+"FFA4C2F4"
+],
+"B63": [
+null,
+"FF00B300"
+],
+"C63": [
+null,
+"FF00B300"
+],
+"D63": [
+null,
+"FF00B300"
+],
+"F63": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A64": [
+"Inkling",
+"FFA4C2F4"
+],
+"B64": [
+null,
+"FFFFFF00"
+],
+"C64": [
+null,
+"FF00B300"
+],
+"D64": [
+null,
+"FFFFFF00"
+],
+"F64": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A65": [
+"Ridley",
+"FFA4C2F4"
+],
+"B65": [
+null,
+"FF00B300"
+],
+"C65": [
+null,
+"FF00B300"
+],
+"D65": [
+null,
+"FF00B300"
+],
+"F65": [
+"Nair > wUair",
+"FF00B300"
+],
+"A66": [
+"Simon/Richter",
+"FFA4C2F4"
+],
+"B66": [
+null,
+"FF00B300"
+],
+"C66": [
+null,
+"FFFFFF00"
+],
+"D66": [
+null,
+"FF00B300"
+],
+"F66": [
+"Nair/Uair> Fair",
+"FF00B300"
+],
+"A67": [
+"King K. Rool",
+"FFA4C2F4"
+],
+"B67": [
+null,
+"FF00B300"
+],
+"C67": [
+null,
+"FFFFFF00"
+],
+"D67": [
+null,
+"FFFFF225"
+],
+"F67": [
+"Nair > wUair",
+"FF00B300"
+],
+"A68": [
+"Isabelle",
+"FFA4C2F4"
+],
+"B68": [
+null,
+"FFFF9900"
+],
+"C68": [
+null,
+"FFFF9900"
+],
+"D68": [
+null,
+"FFFFFF00"
+],
+"F68": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A69": [
+"Incineroar",
+"FFA4C2F4"
+],
+"B69": [
+null,
+"FFFF9900"
+],
+"C69": [
+null,
+"FF00B300"
+],
+"D69": [
+null,
+"FFFFFF00"
+],
+"F69": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A70": [
+"Piranha Plant",
+"FFA4C2F4"
+],
+"B70": [
+"Foot? Pot.",
+"FFFF9900"
+],
+"D70": [
+null,
+"FFCC0000"
+],
+"F70": [
+"Uair > Dtilt >SH>Fair",
+"FFCC0000"
+],
+"A71": [
+"Joker",
+"FFA4C2F4"
+],
+"B71": [
+null,
+"FF00B300"
+],
+"C71": [
+null,
+"FF00B300"
+],
+"D71": [
+null,
+"FF00B300"
+],
+"F71": [
+"Nair/Uair> Uair",
+"FF00B300"
+],
+"A72": [
+"Hero",
+"FFA4C2F4"
+],
+"B72": [
+null,
+"FFFF9900"
+],
+"C72": [
+null,
+"FFCC0000"
+],
+"D72": [
+null,
+"FF00B300"
+],
+"F72": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"A73": [
+"Banjo & Kazooie",
+"FFA4C2F4"
+],
+"B73": [
+null,
+"FF00B300"
+],
+"C73": [
+null,
+"FF00B300"
+],
+"D73": [
+null,
+"FFFFFF00"
+],
+"F73": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A74": [
+"Terry Bogard",
+"FFA4C2F4"
+],
+"B74": [
+null,
+"FF00B300"
+],
+"C74": [
+null,
+"FF00B300"
+],
+"D74": [
+null,
+"FF00B300"
+],
+"F74": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"G74": [
+"Uair only from behind or with dash in front",
+null
+],
+"A75": [
+"Byleth",
+"FFA4C2F4"
+],
+"B75": [
+null,
+"FFFF9900"
+],
+"C75": [
+null,
+"FFFFFF00"
+],
+"D75": [
+null,
+"FF00B300"
+],
+"F75": [
+"Nair/Uair> Uair/Fair",
+"FF00B300"
+],
+"A76": [
+"Min Min",
+"FFA4C2F4"
+],
+"B76": [
+"Stands on one foot. Weirdo.",
+"FFFFFF00"
+],
+"D76": [
+null,
+"FFFF9900"
+],
+"F76": [
+"Nair > SH > Fair",
+"FFFF9900"
+],
+"A77": [
+"Steve",
+"FFA4C2F4"
+],
+"B77": [
+null,
+"FFFF9900"
+],
+"C77": [
+null,
+"FF00B300"
+],
+"D77": [
+null,
+"FFFFFF00"
+],
+"F77": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A78": [
+"Sephiroth",
+"FFA4C2F4"
+],
+"B78": [
+null,
+"FFFF9900"
+],
+"C78": [
+null,
+"FFFF9900"
+],
+"D78": [
+null,
+"FF00B300"
+],
+"F78": [
+"Nair > wUair",
+"FF00B300"
+],
+"A79": [
+"Pyra/Mythra",
+"FFA4C2F4"
+],
+"B79": [
+null,
+"FFCC0000"
+],
+"C79": [
+null,
+"FFCC0000"
+],
+"D79": [
+null,
+"FFFF9900"
+],
+"F79": [
+"Nair > SH > Fair",
+"FFFF9900"
+],
+"A80": [
+"Kazuya",
+"FFA4C2F4"
+],
+"B80": [
+null,
+"FF00B300"
+],
+"C80": [
+null,
+"FF00B300"
+],
+"D80": [
+null,
+"FFFFFF00"
+],
+"F80": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A81": [
+"Sora",
+"FFA4C2F4"
+],
+"B81": [
+null,
+"FFCC0000"
+],
+"C81": [
+null,
+"FFCC0000"
+],
+"D81": [
+null,
+"FFFFFF00"
+],
+"F81": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A82": [
+"Mii Brawler",
+"FFA4C2F4"
+],
+"B82": [
+null,
+"FF00B300"
+],
+"C82": [
+null,
+"FF00B300"
+],
+"D82": [
+null,
+"FFFFFF00"
+],
+"F82": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+],
+"A83": [
+"Mii Swordfighter",
+"FFA4C2F4"
+],
+"B83": [
+null,
+"FFCC0000"
+],
+"C83": [
+null,
+"FFFFFF00"
+],
+"D83": [
+null,
+"FF00B300"
+],
+"F83": [
+"Nair/Uair> Fair",
+"FF00B300"
+],
+"A84": [
+"Mii Gunner",
+"FFA4C2F4"
+],
+"B84": [
+null,
+"FFFF9900"
+],
+"C84": [
+null,
+"FFFFFF00"
+],
+"D84": [
+null,
+"FF00B300"
+],
+"F84": [
+"Nair/Uair > SH > Fair",
+"FFFFFF00"
+]
+},
+"comments": {
+"F33": "Tier 2: Nair > IDJ Nair Tier 3: Nair/Bair>StepBack ➚Fsmash",
+"F30": "Tier 3: Nair/Bair> Dashback ➘Fsmash",
+"F29": "Tier 3: Nair > Sh > Fair",
+"F60": "Tier 3: Bair> Dashback ➘Fsmash",
+"F59": "Tier 3: Nair/Bair> StepBack ➚Fsmash",
+"F26": "Tier 3: Nair > SH > Fair",
+"F23": "Tier 1: Bair > Dash Uair Tier2",
+"F22": "Tier 3: Bair > ➚Fsmash",
+"F18": "Tier 2: Nair > Utilt",
+"F17": "Tier 2: Nair > Utilt Tier 3: Nair/Bair> Dashback ^Fsmash",
+"F16": "Tier 3: Dtilt > Fair",
+"F48": "Tier 3: Bair> DashBack ➚Fsmash",
+"F15": "Tier 2: Nair > IDJ Nair",
+"F46": "Tier 2: Nair > wDair",
+"F12": "Tier 2: Dtilt/Uair>SH>Fair",
+"F11": "Tier 3: Nair/Bair> DashBack ➚Fsmash",
+"F43": "Tier 3: Nair/Bair> StepBack ➚Fsmash",
+"F9": "Tier 3: Nair/Bair> StepBack ➚Fsmash",
+"F41": "Tier 4: Uair > Dtilt > SH > Fair",
+"F39": "Tier 3: Bair > ➚Fsmash",
+"F71": "Tier 2: Nair/Uair > SH > Fair"
+}
+}

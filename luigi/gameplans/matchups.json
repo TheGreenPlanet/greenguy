@@ -1,0 +1,617 @@
+{
+ "title": "Gameplan",
+ "note": "Compacted from the Luigi Discord matchup notes.",
+ "entries": [
+  {
+   "names": [
+    "Richter",
+    "Simon"
+   ],
+   "do": [
+    "Fireball / ZAir cancel Cross and Holy Water (Z-catch the water)",
+    "Axe is laggy (FAF 67): stay grounded, run in when he throws it close",
+    "Uppercut has 26f landing lag: punish it",
+    "Beat tether recovery with a long-lasting hitbox; ZAir his Up B",
+    "At ledge: delay the snap so Holy Water expires; neutral getup if he axes with no water",
+    "Easy to combo (no odd angles)"
+   ],
+   "dont": [
+    "Don't roll through Holy Fire at the ledge",
+    "Don't jump at ledge (Uair juggles); Ftilt is safe on shield and outranges everything",
+    "Fthrow at ledge kills: spot dodge, don't just shield",
+    "Cross travels far past him if you jump it; Axe goes through the stage, Utilt through platforms",
+    "Watch runoff Nair, Nair → Up B and Dair → Up B (DI dependent)"
+   ]
+  },
+  {
+   "names": [
+    "Ganondorf"
+   ],
+   "do": [
+    "Mash out of Aerial Flame Choke at low %",
+    "Tech Dark Dive when recovering: easy hard punish",
+    "Shield Wizard's Foot (it slows on hit) and punish"
+   ],
+   "dont": [
+    "Wizard's Foot can cross up shield and may beat Fireball: watch spacing",
+    "Missing the Flame Choke tech = Dtilt / Ftilt / Jab / dash attack"
+   ]
+  },
+  {
+   "names": [
+    "Wolf"
+   ],
+   "do": [
+    "ZAir edgeguards his recovery, especially Wolf Flash",
+    "Platform stages (Yoshi's, Smashville) help vs Blaster; Jab is faster (f2 vs f4)",
+    "Parry his landing Nair; punish Nair on shield OoS with Nair / Usmash / Up B (-9f)",
+    "Blaster: crouch with correct timing, or parry / short hop over (can't crawl, won't clank with Fireball)",
+    "Cyclone through Blaster works if predicted: don't overuse"
+   ],
+   "dont": [
+    "Fsmash is safe on shield",
+    "Fire Wolf hits from under stage: Dtilt ledge pressure is hard",
+    "Dsmash 2-frames and kills uncharged at ~70%; early kills: Fair → Bair, Nair → Dsmash at ledge",
+    "DI Dthrow and Nair down and away (Wolf Flash follow-ups ~30–80%; Nair 55–75%)",
+    "He baits with jump-in → DJ away"
+   ]
+  },
+  {
+   "names": [
+    "Young Link"
+   ],
+   "do": [
+    "Cyclone out of Dthrow → Fair / Uair at low %",
+    "Landing Nair dodges Fire Arrows; Fireball clanks Fire Arrow and Boomerang, and sets off Bombs",
+    "Shielded Bombs that hit the ground don't explode",
+    "Trap him: small stages, few platforms"
+   ],
+   "dont": [
+    "RAR Bair (single hit leads to kill confirms)",
+    "Don't challenge Utilt with Nair: dodge, jump, or Cyclone",
+    "Reverse Up B doesn't snap ledge and can drag you into the hits"
+   ],
+   "stage": "Best: Final Destination, Smashville · Avoid: Lylat, Pokémon Stadium 1/2, Kalos, Battlefield, Dream Land"
+  },
+  {
+   "names": [
+    "Isabelle"
+   ],
+   "do": [
+    "Punish low balloons (Bair near stage, Fair away from it, Dair)",
+    "Punish helpless Up B landing (31f before she can shield)",
+    "Break Lloid Trap: running Dsmash, getup attack, drop-down Fair, jump Nair / Uair, Fsmash, Ftilt, Dtilt x2; you can run over it",
+    "Pivot Dsmash goes under rising Fair; Usmash beats landing Dair (unsafe on block)"
+   ],
+   "dont": [
+    "Normal getup doesn't work vs Lloid Trap; roll sets it off",
+    "Fireball doesn't break her pot",
+    "Watch the fishing rod's returning grabbox (bounces off shield, hitbox is on the lure)"
+   ]
+  },
+  {
+   "names": [
+    "King K. Rool"
+   ],
+   "do": [
+    "Getup attack from ledge doesn't reach you: bait it into Fsmash kill",
+    "Plunger beats his Up B; ZAir him out of it",
+    "Fireball the cannonball back into the blunderbuss, then grab / Fsmash / Up B",
+    "Nair beats Crown as you land; belly armor breaks to a full Fsmash or Misfire",
+    "Big and easy to combo (Down B breaks out)"
+   ],
+   "dont": [
+    "He kills early: damage adds up fast",
+    "His spikes are easy to land: mix up recovery; his Up B outranges your Dair",
+    "Slow grab lets him rack up damage; punish belly armor Ftilt with Jab",
+    "Recovery mixups can drag you around"
+   ]
+  },
+  {
+   "names": [
+    "Villager"
+   ],
+   "do": [
+    "ZAir and Fireball destroy Lloid once it moves",
+    "Aerials beat slingshots; crawl so he uses landing slingshots (lag)",
+    "Demolish him if he uses Balloon Trip"
+   ],
+   "dont": [
+    "Bowling Ball beats your recovery",
+    "All his aerials gimp you and he goes deep offstage",
+    "F3 Nair evades your strings"
+   ]
+  },
+  {
+   "names": [
+    "Inkling"
+   ],
+   "do": [
+    "Roller is unsafe on shield (OoS Nair); Fireball / ZAir stop it",
+    "Rapid jabs are unsafe; roll behind after 11 hits",
+    "Parry Bair, then Up B (needs parry SDI)"
+   ],
+   "dont": [
+    "Squid Jump's initial hitbox gimps you; landing hitbox is hard to punish",
+    "Bair is too safe on shield: punish it off a parry",
+    "Splat Bomb snipes your Green Missile recovery"
+   ]
+  },
+  {
+   "names": [
+    "Little Mac"
+   ],
+   "do": [
+    "ZAir destroys his recovery at any %",
+    "Keep him in the air; grab punishes Fsmash",
+    "Up B punishes shielded Side B"
+   ],
+   "dont": [
+    "Fsmash has insane super armor; KO Punch ignores shield",
+    "Huge shield damage: don't sit in shield",
+    "He rushes you down and catches you off guard with speed"
+   ]
+  },
+  {
+   "names": [
+    "Fox"
+   ],
+   "do": [
+    "Don't punish Nair on shield: shield, then punish what he does after",
+    "Shield his grab game (no true throw combos); Cyclone / Nair escape combos until he baits it",
+    "Recovery is linear: ZAir / Dtilt / Dair / Fireball; trade or win vs Firefox with an aerial",
+    "Crouch / crawl under Laser; camp with Fair, ZAir, Fireball",
+    "0-death: 20–30% Dthrow → Fair → landing Uair → Up B; 30–40% use ZAir instead of Uair",
+    "Dash attack on shield: Up B or grab"
+   ],
+   "dont": [
+    "He juggles with Uair strings: don't panic",
+    "Watch his double jump in neutral",
+    "He can't edgeguard well, but expect shine spikes"
+   ]
+  },
+  {
+   "names": [
+    "Lucario"
+   ],
+   "do": [
+    "Fireball / ZAir approach slowly; counter is his only real mixup",
+    "Edgeguard with Dtilt / ZAir; his Up B above stage level is punished by smashes or Up B",
+    "At low % he has no tools: spam grab",
+    "Cyclone out of grab combos (few are true)"
+   ],
+   "dont": [
+    "Recovery is very hard (Neutral B, Counter, aerials, esp. Dair)",
+    "If a combo isn't true he mashes Down B for free %",
+    "Lucario camps with Neutral B / Side B; above 120% neutral gets very hard",
+    "Don't fear aura: finish stocks early"
+   ],
+   "stage": "His best stage: Kalos"
+  },
+  {
+   "names": [
+    "Wii Fit Trainer"
+   ],
+   "do": [
+    "Fireball reflects Sun Ball and makes her approach; Fireball / Down B deflect Header",
+    "Landing Down B to the side beats her options (don't overuse)",
+    "Recovery is predictable: Bair through it, ZAir; stay above her offstage",
+    "Grab her out of dash attack; her aerials aren't safe on shield",
+    "Attack the front of her shield (she Bairs OoS when facing back)"
+   ],
+   "dont": [
+    "Nothing contests Utilt: land to the side",
+    "Slightly charged Sun Ball beats Fireball; don't challenge the ball with aerials",
+    "Side B snipes / spikes you offstage (huge hitbox); she edgeguards deep",
+    "Ledge trapping is risky: she stalls and hits you out of setups; mash out of her sweetspot Jab",
+    "Don't let her breathe (Deep Breathing buffs everything)"
+   ]
+  },
+  {
+   "names": [
+    "R.O.B."
+   ],
+   "do": [
+    "Arm Rotor is very unsafe: Up B every time; SDI out if behind him",
+    "He almost always Uairs at ledge: shield",
+    "Shield gyro deletes it; catch it with Dair / Fair rather than shielding repeatedly",
+    "Nair has startup: punish it; shield point-blank gyro → Up B",
+    "Recovery is vulnerable to Dair / ZAir (he can attack out of Up B)"
+   ],
+   "dont": [
+    "His Laser doesn't collide with anything",
+    "His recovery lets him edgeguard you relentlessly",
+    "Offstage gyro: catch it, throw it up before Up B to cover Dair"
+   ]
+  },
+  {
+   "names": [
+    "Mr. Game & Watch"
+   ],
+   "do": [
+    "Light: he dies early",
+    "Punish spaced Bair with Up B OoS (poor spacing: Up B / Super Jump Punch)",
+    "ZAir can't be reflected by Oil Panic"
+   ],
+   "dont": [
+    "Don't go offstage: his recovery is insane",
+    "Uair is a free juggle (poor airspeed): airdodge carefully",
+    "Fire (f3) breaks combos and is a great OoS; Oil Panic makes Fireball a hazard",
+    "Disjoints make approaching hard"
+   ]
+  },
+  {
+   "names": [
+    "Bowser"
+   ],
+   "do": [
+    "Punish Fsmash with grab / Up B; space him with Fireball",
+    "ZAir isn't affected by Tough Guy",
+    "Stay centre stage: if he short hops at the edge he's ready to Fair",
+    "Take an early stock lead: he kills very early"
+   ],
+   "dont": [
+    "Don't grab at the edge (spot dodge → Dsmash)",
+    "Tough Guy beats Fireball below mid %",
+    "At kill % don't walk into his smashes: wait and punish"
+   ]
+  },
+  {
+   "names": [
+    "Kirby"
+   ],
+   "do": [
+    "Fsmash: punish once he loses his hurtbox (Up B / grab)",
+    "Shield Up B spam → grab / Up B; parry Up B above ledge → Up B / grab / Utilt / Fsmash / Dsmash",
+    "Fireball spaces him; punish a missed grab with Up B",
+    "Bait his recovery at the bottom of the stage (Up B has no intangibility)"
+   ],
+   "dont": [
+    "He racks up % with grab and Utilt combos",
+    "He kills early with gimps / jiggs (don't tech with Bair); trip → Fsmash: avoid Dtilt at high %"
+   ]
+  },
+  {
+   "names": [
+    "Joker"
+   ],
+   "do": [
+    "Bait Dash Attack → grab / Up B (few approach options outside Rainstorm)",
+    "Gimp him offstage with Fair / Dair / ZAir / Bair; coin gimp when he hangs past Plunger range",
+    "His true grabs are limited: Nair / Cyclone",
+    "Platform stages to approach his gun camping",
+    "Fireball + ZAir to wait out Arsene"
+   ],
+   "dont": [
+    "Mix up your recovery or Rainstorm gimps you",
+    "Side B isn't punishable at midrange",
+    "Arsene kills early at ledge: stay calm",
+    "He can Counter / Rebel's Guard Misfire for an easy kill"
+   ]
+  },
+  {
+   "names": [
+    "Captain Falcon"
+   ],
+   "do": [
+    "No projectiles: grab or combo starters",
+    "ZAir beats Up B, then Dair for a clean spike",
+    "Fireball / ZAir stop Falcon Kick"
+   ],
+   "dont": [
+    "He's faster than you: mind spacing",
+    "He goes low and far for spikes: use very low recoveries",
+    "His Up B often beats Dair: use ZAir → Dair"
+   ]
+  },
+  {
+   "names": [
+    "Banjo & Kazooie"
+   ],
+   "do": [
+    "Side B is very unsafe on shield (shield drop → dash grab)",
+    "Wonderwing: Up B before Banjo moves, or from very low to dodge the 2f"
+   ],
+   "dont": [
+    "Wonderwing kills at very low % if 2-framed with no double jump",
+    "Uair juggles can't be Cycloned (Kazooie is disjointed)"
+   ]
+  },
+  {
+   "names": [
+    "Mario"
+   ],
+   "do": [
+    "Camp him: his approach is linear; ZAir and pivot grab do wonders",
+    "Fair → Nair stuff and 0-death are easy (Uair hitbox is odd)",
+    "Break combos with Nair / airdodge, mix it up (he baits Cyclone); DI away from ladder combos",
+    "Recover low (avoids FLUDD and Fair spikes), but save your jump",
+    "Read FLUDD and shield it; bair his Up B from the side"
+   ],
+   "dont": [
+    "Fireball clanks with Green Missile; Cape reverses it: don't recover low into Fireball",
+    "FLUDD ruins your jump / pushes you away: be careful with aggressive ledge options",
+    "All his aerials except Fair are safe on shield: punish the option after",
+    "Plunger loses to his Up B; Up B OoS is risky when FLUDD is charged",
+    "Fsmash has big range; he kills with Fsmash, Fair, Bair, ledge Bthrow, falling Uair → Fair"
+   ]
+  },
+  {
+   "names": [
+    "Mega Man"
+   ],
+   "do": [
+    "Up B OoS beats Leaf Shield (around him or thrown)",
+    "Uair clanks his Dair; ZAir blocks Metal Blade, Splat Bomb, pellets",
+    "SH Fireball → ZAir goes through multiple pellets"
+   ],
+   "dont": [
+    "Fsmash goes through all projectiles"
+   ]
+  },
+  {
+   "names": [
+    "Ice Climbers"
+   ],
+   "do": [
+    "Cyclone limits them to 1–3 hit strings and separates them",
+    "ZAir pokes both; Dash attack hits both; Fireball bounces their ice back",
+    "Separate with Uthrow or ZAir → Dtilt offstage, then take one off stage",
+    "On platforms ZAir them from above vs Blizzard",
+    "Core tools: dash attack, Cyclone, ZAir"
+   ],
+   "dont": [
+    "Little comboing from grab: nickel-and-dime them and look for gimps",
+    "Blizzard is spooky"
+   ]
+  },
+  {
+   "names": [
+    "Samus",
+    "Dark Samus"
+   ],
+   "do": [
+    "Fireball destroys missiles and weak Charge Shots (punish her endlag with grab)",
+    "ZAir beats her tether; Fair hits her out of Screw Attack",
+    "Spot dodge her grab → Up B; spot dodge Jab 1 → pivot grab",
+    "Shield all multi-hits of her ledge Fair; bait Nair / Fair / tilts",
+    "0-death: aim for her foot and fade back the Uair slightly"
+   ],
+   "dont": [
+    "Charge Shot can't hit you on ledge as Samus, but Dark Samus's can",
+    "Don't throw careless Fireballs (full Charge Shot punishes)",
+    "Dthrow combos can't be Cycloned: DI / SDI instead",
+    "Your aerials are unsafe vs her f4 Screw Attack OoS; landing is awful: stay grounded"
+   ],
+   "stage": "Best: Smashville (waveland the middle platform) · Avoid: Town & City, Kalos"
+  },
+  {
+   "names": [
+    "Corrin"
+   ],
+   "do": [
+    "Windbox Cyclone at the ledge works",
+    "Neutral B is blocked by everything but grab"
+   ],
+   "dont": [
+    "Fsmash covers all your moves except Cyclone, Fireball and Misfire"
+   ]
+  },
+  {
+   "names": [
+    "Donkey Kong"
+   ],
+   "do": [
+    "Fireball / ZAir space him; ZAir / Plunger gimp his recovery",
+    "Punish spaced-wrong Bair with Up B (average spacing: OoS Fair / Nair)",
+    "Dash attack and Side B on shield: Up B (Usmash also for dash attack)",
+    "Grab still cancels his armored Neutral B; combo him heavily"
+   ],
+   "dont": [
+    "Bair is safe on shield if spaced right",
+    "DI away from dash attack combos at low %",
+    "Utilt juggles you on platforms; Dtilt range and Side B pressure your shield"
+   ]
+  },
+  {
+   "names": [
+    "Jigglypuff"
+   ],
+   "do": [
+    "Fireball / ZAir keep her from approaching",
+    "Grab on landing; Cyclone is great (intangible, strong, damaging)",
+    "Punish Sing with grab; your aerials contest her"
+   ],
+   "dont": [
+    "Combos are shorter (floaty, light)",
+    "Her Nair edgeguards you easily"
+   ]
+  },
+  {
+   "names": [
+    "Rosalina & Luma"
+   ],
+   "do": [
+    "Dash attack / ZAir take out Luma; ZAir beats her recovery",
+    "Uthrow separates them (Dthrow combos weak)"
+   ],
+   "dont": [
+    "Uair juggles you: mix up landing",
+    "Luma can stop your recovery safely"
+   ]
+  },
+  {
+   "names": [
+    "Ness"
+   ],
+   "do": [
+    "ZAir / Fair keep him away (he absorbs Fireball); keep him in the air",
+    "Hit the start of PK Thunder to send him into freefall; ZAir / Fair gimp it; Cyclone windbox pushes him off (also after he hits himself with PK Thunder 2)",
+    "OoS Usmash / Up B punish bad landing aerials (Nair)",
+    "High %: bait, then Fsmash / Usmash / Up B"
+   ],
+   "dont": [
+    "PK Fire: DI away and up (no hitlag, so SDI doesn't work)",
+    "He edgeguards with PK Fire / PK Thunder: recover high, then low once he adapts",
+    "Bthrow kills fast; Uair + PK Thunder juggles",
+    "Yo-yo (lingering Usmash / Dsmash) 2-frames you: hold down on Up B then release to snap; SDI down and away"
+   ]
+  },
+  {
+   "names": [
+    "Link"
+   ],
+   "do": [
+    "Bait the bomb out (it doesn't explode on impact), then strike; intercept his bomb recovery",
+    "ZAir beats all his projectiles and his recovery at ledge; Fireball pops bombs that aren't thrown",
+    "Recovery is mediocre: gimp his double jump (Fair / Bair after he drops the bomb)"
+   ],
+   "dont": [
+    "Fast faller: hard to combo",
+    "Better projectiles than Fireball: he camps, then strikes; heavy shield pressure",
+    "Boomerang gives him lots of %; Nair is safe on shield"
+   ]
+  },
+  {
+   "names": [
+    "Snake"
+   ],
+   "do": [
+    "You can crouchwalk under C4's explosion on the PS2 platforms"
+   ],
+   "dont": [
+    "Don't try it on Battlefield (needs a timed crouch)"
+   ]
+  },
+  {
+   "names": [
+    "Sonic"
+   ],
+   "do": [
+    "Cyclone beats Spin Dash; ZAir can clank it → easy grab",
+    "Tilt your shield up vs Homing Attack (it shield pokes), then Fair / Bair",
+    "A Homing Attack out of range leaves him in huge endlag",
+    "ZAir him offstage (predict the directional airdodge)"
+   ],
+   "dont": [
+    "Don't stand still fireballing (Spin Dash is invincible early; he jumps over)",
+    "Spin Dash wiff punishes landing aerials: land away from him",
+    "Offstage: watch Fair and Spring (don't sit directly under the ledge; walls make it worse); Up B past ledge is a mixup",
+    "Fsmash is big, and dash-back Fsmash is quick"
+   ]
+  },
+  {
+   "names": [
+    "King Dedede"
+   ],
+   "do": [
+    "Fireball / ZAir space him and reflect Gordos; stay under platforms to dodge Gordos",
+    "Dtilt is unsafe on shield (aerials, Up B at high %); Up B OoS from FF Nair",
+    "Punish dash attack and Fsmash lag with grab / Up B; punish missed Down B with Up B / Fsmash / 0-death",
+    "ZAir 2-frames his recovery (not during Up B armor)"
+   ],
+   "dont": [
+    "He forces you defensive; Fsmash and dash attack do huge damage and shield damage",
+    "Multiple jumps and Up B armor: ZAir gimps often fail",
+    "Mix up recovery vs Gordo and save your jumps; poor airspeed gets you juggled",
+    "Down B is dangerous while hanging on ledge: bait the release; Gordo ledge traps"
+   ]
+  },
+  {
+   "names": [
+    "Zero Suit Samus"
+   ],
+   "do": [
+    "Missed grab → Up B; landing flip kick (extra lag) → Up B / Fsmash",
+    "ZAir / Fireball vs camping; OoS Usmash / Up B punish Dair, Side B, Usmash, Neutral B close",
+    "If grabbed, get to the ground asap (Fthrow tech chases)"
+   ],
+   "dont": [
+    "Her Uair juggles you: airdodge in time, Cyclone, or get to ledge",
+    "Dair trades stocks and beats Cyclone once intangibility ends: mix up recovery",
+    "She walls with ZAir / Side B / Neutral B: don't challenge ZAir, don't chase her flip kick",
+    "Don't charge Misfire offstage (Bair); Dair spike is techable only on stages with walls (not FD, BF, Smashville, Town)",
+    "Up throw kills at 160%"
+   ]
+  },
+  {
+   "names": [
+    "Falco"
+   ],
+   "do": [
+    "Laser at point blank is punishable with Fsmash",
+    "His Fair can clank with Up B offstage (coin gimp)"
+   ],
+   "dont": [
+    "His Fair and Nair poke your shield (even from a platform) and lead to combos / kills (Nair → Utilt → Uair / Bair)",
+    "Fair can't be beaten OoS unless fully blocked; he can stage spike or whiff the last hits to bait airdodge"
+   ]
+  },
+  {
+   "names": [
+    "Palutena"
+   ],
+   "do": [
+    "Catch landings with pivot grab; run in when she short hops; grounded approaches (grab, Dtilt, Utilt, Fireball)",
+    "0-death is frame perfect: dair nair dair nair uair uair rUair bair; beware Counter",
+    "Her recovery is easy to 2-frame: ZAir → Dair (or ZAir / Dtilt); watch her teleport habits",
+    "When juggled retreat to ledge; Cyclone between her Nairs; DI / SDI out"
+   ],
+   "dont": [
+    "Don't hang out in the air (Nair); her Uair juggles you to early kills",
+    "Usmash at ledge goes high and catches airdodge: recover low; watch Uair under ledge at high %",
+    "Grabbed at high %: DI out vs Dthrow → Bair, DI in if hit",
+    "Explosive Flame: airdodge toward stage vs Side B"
+   ],
+   "stage": "Ban triplat stages (platform juggles give her early kills)"
+  },
+  {
+   "names": [
+    "Byleth"
+   ],
+   "do": [
+    "Low mobility: combo and rush her down; lots of endlag to punish",
+    "ZAir hits her grapple recovery; crawl under a fully charged arrow"
+   ],
+   "dont": [
+    "Fair / Bair have range and kill power; she kills early",
+    "Most of her moves break shields; Side B has a huge hitbox (shield / parry from afar)"
+   ]
+  },
+  {
+   "names": [
+    "Ryu",
+    "Ken"
+   ],
+   "do": [
+    "Tatsu is intangible but still loses to Utilt / Uair / Fair / Usmash OoS"
+   ],
+   "dont": [
+    "Don't shield Bair: Bair → Dsmash → true Up B breaks your shield"
+   ]
+  },
+  {
+   "names": [
+    "Pikachu"
+   ],
+   "do": [
+    "Tilt your shield up vs Fair / Bair / Nair (they shield poke)"
+   ],
+   "dont": []
+  },
+  {
+   "names": [
+    "Terry"
+   ],
+   "do": [
+    "Parry the last hit of Rising Tackle → Dtilt gimp at high %",
+    "Fireball / ZAir neutral shuts down his approach",
+    "Edgeguard: Burn Knuckle / Crack Shoot can be baited and punished",
+    "vs Dtilt spam at ledge: getup attack or drop ledge → Fair (don't roll)"
+   ],
+   "dont": [
+    "When Go! is active stay grounded (Power Geyser has a huge hitbox)"
+   ]
+  }
+ ]
+}

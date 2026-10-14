@@ -16,3 +16,9 @@ python3 -m http.server -d site 8000   # then open http://localhost:8000
   This drives the ZTD box.
 * `luigi/ztd/ztd-*.csv` — the older 0-death sheet (overlapping windows). Only its character-specific combos tab is still used.
 * `python3 -I scripts/build_data.py` regenerates `site/data.js` from those CSVs and prints which characters have no data.
+* `luigi/ztd/*DThrow Tumble Percents.csv` — dthrow tumble percents (with rage).
+* `luigi/ledge/` — "Hitting Ledge Hangs" workbook (difficulty is the cell color, read from the xlsx).
+* `luigi/shield-poke/shield-poke.json` — slim extract of the Shield Poke workbook
+  (`scripts/extract_shield_poke.py`; the original is ~180 MB of GIFs and is not kept).
+* `luigi/bair-dtilt/` — wBair → Dtilt followups workbook.
+* `luigi/character-specific/`, `luigi/gameplans/matchups.json` — hand-written combos and compacted matchup notes.

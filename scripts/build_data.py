@@ -47,7 +47,7 @@ ALIASES = {
     "megaman": "Mega Man", "rob": "R.O.B.", "gamewatch": "Mr. Game & Watch",
     "mrgw": "Mr. Game & Watch", "mrgamewatch": "Mr. Game & Watch", "gw": "Mr. Game & Watch",
     "falcon": "Captain Falcon", "diddy": "Diddy Kong", "zsuitsamus": "Zero Suit Samus",
-    "pacman": "Pac-Man", "ness": "Ness", "pyra": "Pyra", "mythra": "Mythra",
+    "pacman": "Pac-Man", "ness": "Ness", "charitard": "Charizard", "pyra": "Pyra", "mythra": "Mythra",
 }
 unresolved = set()
 
@@ -349,7 +349,194 @@ for name, lst in ztd["random"].items():
         char_specific.setdefault(name, []).append({"title": d["name"], "window": e["window"], "notes": [], "seq": d["seq"]})
 del ztd["random"], ztd["randomDefs"]
 
-out = {"roster": roster, "plan": plan, "moves": moves, "charSpecific": char_specific}
+# DThrow tumble percents (0% rage plus a few rage levels)
+tumble = {}
+trows = rows(LUIGI / "ztd/Luigi's Mansion - The Data Compendium - DThrow Tumble Percents.csv")
+rage_cols = [h.split("%")[0] for h in trows[0][2:]]  # "60% Rage" -> "60"
+for r in trows[1:]:
+    r += [""] * 6
+    if not r[0] or not re.search(r"\d", r[1]):
+        continue
+    names, variant = resolve(r[0])
+    entry = {"p": r[1], "rage": {k: v for k, v in zip(rage_cols, r[2:6]) if v}}
+    if variant:
+        entry["variant"] = variant
+    for n in names:
+        tumble.setdefault(n, []).append(entry)
+
+# projectiles Luigi can crouch under (gameplans/). Colors in the source sheet are lost in the CSV export.
+crouch = {}
+for r in rows(LUIGI / "gameplans/Luigi's Mansion - The Data Compendium - Crouchable projectiles.csv")[2:]:
+    r += [""]
+    label, text = " ".join(r[0].split()), " ".join(r[1].split())
+    if not label or not text or text.upper() == "N/A":
+        continue
+    names = ["Marth", "Lucina"] if label.lower() == "marcina" else resolve(label)[0]
+    items = [i.strip() for i in re.split(r",(?![^()]*\))", text) if i.strip()]
+    for n in names:
+        crouch.setdefault(n, []).extend(items)
+
+# ledge hangs: difficulty is the cell fill color in the "Hitting Ledge Hangs" workbook (not in any CSV export)
+import zipfile
+import xml.etree.ElementTree as ET
+
+_M = "{http://schemas.openxmlformats.org/spreadsheetml/2006/main}"
+LEDGE_MOVES = {"C": "Dtilt", "D": "Dtaunt", "E": "Ftilt", "F": "Dsmash", "G": "Fsmash", "L": "Green Missile (misfire)"}
+LEDGE_DIFF = {"FF00FF00": "easy", "FFFFFF00": "medium", "FFFF9900": "hard"}  # red = doesn't work (hidden), gray = no data
+
+
+def read_ledge(path):
+    z = zipfile.ZipFile(path)
+    styles = ET.fromstring(z.read("xl/styles.xml"))
+    fills = []
+    for f in styles.find(_M + "fills"):
+        pf = f.find(_M + "patternFill")
+        fg = pf.find(_M + "fgColor") if pf is not None else None
+        fills.append(fg.get("rgb") if pf is not None and pf.get("patternType") == "solid" and fg is not None else None)
+    xf_fill = [fills[int(x.get("fillId", 0))] for x in styles.find(_M + "cellXfs")]
+    strings = ["".join(t.text or "" for t in si.iter(_M + "t")) for si in ET.fromstring(z.read("xl/sharedStrings.xml"))]
+    comments = {}
+    for c in ET.fromstring(z.read("xl/comments1.xml")).iter(_M + "comment"):
+        comments[c.get("ref")] = "".join(t.text or "" for t in c.iter(_M + "t")).strip()
+    cells = {}
+    for row in ET.fromstring(z.read("xl/worksheets/sheet1.xml")).find(_M + "sheetData"):
+        for c in row:
+            v = c.find(_M + "v")
+            val = None
+            if v is not None:
+                val = strings[int(v.text)] if c.get("t") == "s" else v.text
+            cells[c.get("r")] = (val, xf_fill[int(c.get("s", 0))])
+    return cells, comments
+
+
+ledge, ledge_tips = {}, []
+cells, cmts = read_ledge(LUIGI / "ledge/Hitting Ledge Hangs.xlsx")
+for col, move in LEDGE_MOVES.items():
+    if cmts.get(f"{col}2"):
+        ledge_tips.append({"move": move, "text": " ".join(cmts[f"{col}2"].split())})
+last = max(int(re.search(r"\d+", k).group(0)) for k in cells)
+for rn in range(3, last + 1):
+    label = (cells.get(f"B{rn}") or (None, None))[0]
+    if not label:
+        continue
+    names, _ = resolve(label)
+    entries = []
+    for col, move in LEDGE_MOVES.items():
+        diff = LEDGE_DIFF.get((cells.get(f"{col}{rn}") or (None, None))[1])
+        if diff:
+            note = " ".join(cmts.get(f"{col}{rn}", "").split())
+            entries.append({"move": move, "diff": diff, "note": note} if note else {"move": move, "diff": diff})
+    gen = " ".join(cmts.get(f"B{rn}", "").split())
+    if re.match(r"copied over from", gen, re.I):
+        gen = ""
+    for n in names:
+        if entries:
+            ledge[n] = {"moves": entries, **({"note": gen} if gen else {})}
+
+# shield poking (tier = cell fill color; extracted from the workbook by scripts/extract_shield_poke.py)
+POKE_TIER = {"FF00B300": 1, "FFFFFF00": 2, "FFFFF225": 2, "FFFF9900": 3, "FFCC0000": 4, "FF666666": 0}  # 0 = can't poke
+poke_src = json.loads((LUIGI / "shield-poke/shield-poke.json").read_text(encoding="utf-8"))
+pc, pcm = poke_src["cells"], poke_src["comments"]
+
+
+def pcell(ref):
+    return pc.get(ref) or [None, None]
+
+
+shield_poke = {}
+last_poke = max(int(re.search(r"\d+", k).group(0)) for k in pc)
+for rn in range(3, last_poke + 1):
+    label = pcell(f"A{rn}")[0]
+    if not label:
+        continue
+    names, variant = resolve(label)
+    floor_text, floor_fill = pcell(f"F{rn}")
+    entry = {}
+    if floor_text:
+        entry["floor"] = {"move": floor_text.strip(), "tier": POKE_TIER.get(floor_fill, 0)}
+    parts = {}
+    for col, key in (("B", "front"), ("C", "back"), ("D", "head")):
+        t = POKE_TIER.get(pcell(f"{col}{rn}")[1])
+        if t is not None:
+            parts[key] = t
+    if parts:
+        entry["parts"] = parts
+    alts = []
+    cmt = pcm.get(f"F{rn}", "")
+    for m in re.finditer(r"Tier\s*(\d)\s*:\s*(.*?)(?=Tier\s*\d\s*:|$)", cmt):
+        txt = m.group(2).strip()
+        if txt:
+            alts.append({"tier": int(m.group(1)), "move": txt})
+    if alts:
+        entry["alts"] = alts
+    notes = [pcell(f"{c}{rn}")[0].strip() for c in "GHIJK" if pcell(f"{c}{rn}")[0]]
+    if notes:
+        entry["notes"] = notes
+    if not entry:
+        continue
+    if variant:
+        entry["variant"] = variant
+    for n in names:
+        shield_poke.setdefault(n, []).append(entry)
+
+# Bair > Dtilt followups: column B = Bair short hop, column C = full hop; cell comments hold damage and notes.
+# (Extra columns D..M are unlabeled per-form variants for Shulk / Hero / Wii Fit and are not used.)
+bz = zipfile.ZipFile(LUIGI / "bair-dtilt/Bair-Dtilt followups.xlsx")
+b_strings = ["".join(t.text or "" for t in si.iter(_M + "t")) for si in ET.fromstring(bz.read("xl/sharedStrings.xml"))]
+b_cells = {}
+for row in ET.fromstring(bz.read("xl/worksheets/sheet1.xml")).find(_M + "sheetData"):
+    for c in row:
+        v = c.find(_M + "v")
+        if v is not None:
+            b_cells[c.get("r")] = b_strings[int(v.text)] if c.get("t") == "s" else v.text
+b_comments = {c.get("ref"): " ".join("".join(t.text or "" for t in c.iter(_M + "t")).split())
+              for c in ET.fromstring(bz.read("xl/comments1.xml")).iter(_M + "comment")}
+
+
+def fmt_chain(s):
+    s = re.sub(r"\bUpB\b", "up B", s.strip())
+    s = re.sub(r"\bFf\b", "ff", s)
+    return s.replace("-", " → ")
+
+
+bair_dtilt = {}
+for rn in range(2, 200):
+    label = b_cells.get(f"A{rn}")
+    if not label:
+        continue
+    entry = {}
+    for col, key in (("B", "sh"), ("C", "fh")):
+        chain = b_cells.get(f"{col}{rn}")
+        if not chain or chain.upper() == "N/A":
+            continue
+        item = {"seq": fmt_chain(chain)}
+        cmt = b_comments.get(f"{col}{rn}", "")
+        m = re.match(r"(?i)does\s+([\d.]+)\s*%?\s*[,;]?\s*(.*)$", cmt)
+        if m:
+            item["dmg"] = m.group(1)
+            cmt = m.group(2).strip()
+        if cmt:
+            item["note"] = re.sub(r"\b[A-Za-z]+(?:-[A-Za-z]+){2,}\b", lambda m: fmt_chain(m.group(0)), cmt)
+        entry[key] = item
+    if entry:
+        for n in resolve(label)[0]:
+            bair_dtilt[n] = entry
+
+# matchup gameplans (hand-compacted from the Discord notes)
+matchup = {}
+mfile = json.loads((LUIGI / "gameplans/matchups.json").read_text(encoding="utf-8"))
+for e in mfile["entries"]:
+    for n in e["names"]:
+        if n not in CANON.values():
+            print("UNKNOWN character in matchups.json:", n)
+        item = {"do": e["do"], "dont": e["dont"]}
+        if e.get("stage"):
+            item["stage"] = e["stage"]
+        matchup[n] = item
+
+out = {"roster": roster, "plan": plan, "moves": moves, "charSpecific": char_specific, "tumble": tumble,
+       "crouch": crouch, "ledge": ledge, "ledgeTips": ledge_tips, "poke": shield_poke, "bairDtilt": bair_dtilt,
+       "matchup": matchup}
 OUT.write_text("window.LUIGI_DATA = " + json.dumps(out, ensure_ascii=True, separators=(",", ":")) + ";\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- report

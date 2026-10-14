@@ -159,6 +159,11 @@
         html += '<div class="ztdHeadline">';
         html += '<div class="percentRange">' + lo + " - " + hi + "%</div>";
         html += '<div class="ztdSub">dthrow → dair → … by their percent (DI out)</div>';
+        ((D.tumble && D.tumble[ch.name]) || []).forEach(function (t) {
+            var rage = Object.keys(t.rage || {}).map(function (k) { return k + "% rage: " + t.rage[k]; }).join(" · ");
+            html += '<div class="ztdSub">' + (t.variant ? esc(t.variant) + " — " : "") +
+                "dthrow tumbles at <b>" + esc(t.p) + "</b>" + (rage ? '<br><span class="lbl">' + esc(rage) + "</span>" : "") + "</div>";
+        });
         html += "</div>";
 
         html += '<div class="moreInfo">';
@@ -293,13 +298,101 @@
         return Object.keys(r).map(function (k) { return r[k].replace("Subtract ", "") + " @ " + k + "%"; }).join(", ");
     }
 
+    var DIFF_LABEL = { easy: "Easy", medium: "Medium", hard: "Hard" };
+    var DIFF_ORDER = { easy: 0, medium: 1, hard: 2 };
+
+    // Moves that hit a ledge hang. "Doesn't work" is already filtered out in the data.
+    function ledgeSection(ch) {
+        var l = D.ledge && D.ledge[ch.name];
+        if (!l) return "";
+        var moves = l.moves.slice().sort(function (a, b) { return DIFF_ORDER[a.diff] - DIFF_ORDER[b.diff]; });
+        var html = '<div class="sectionTitle">Ledge hang</div><div class="moreInfo">';
+        moves.forEach(function (m) {
+            html += row(esc(m.move), '<span class="ledge-' + m.diff + '">' + DIFF_LABEL[m.diff] + "</span>", m.note ? esc(m.note) : "");
+        });
+        if (l.note) {
+            html += '<div class="moreInfo-row"><div class="moreInfo-disclaimer">' + esc(l.note) + "</div></div>";
+        }
+        return html + "</div>";
+    }
+
+    // Matchup gameplan: short Do / Don't lists (+ stage advice where the notes have it)
+    function gameplanSection(ch) {
+        var g = D.matchup && D.matchup[ch.name];
+        if (!g) return "";
+        function list(items) {
+            return items.map(function (t) { return '<span class="sub">• ' + esc(t) + "</span>"; }).join("");
+        }
+        var html = '<div class="sectionTitle">Gameplan</div><div class="moreInfo">';
+        if (g["do"].length) html += row('<span class="gp-do">Do</span>', list(g["do"]), "");
+        if (g.dont.length) html += row('<span class="gp-dont">Watch out</span>', list(g.dont), "");
+        if (g.stage) html += row("Stage", esc(g.stage), "");
+        return html + "</div>";
+    }
+
+    // Bair > Dtilt followups, short hop and full hop Bair
+    function bairDtilt(ch) {
+        var b = D.bairDtilt && D.bairDtilt[ch.name];
+        if (!b) return "";
+        var html = '<div class="sectionTitle">wBair → Dtilt followups</div>' +
+            '<div class="ztdSub">land wBair → turn around Dtilt → then:</div><div class="moreInfo">';
+        [["sh", "Short hop"], ["fh", "Full hop"]].forEach(function (k) {
+            var e = b[k[0]];
+            if (!e) return;
+            var notes = [];
+            if (e.dmg) notes.push("deals " + esc(e.dmg) + "%");
+            if (e.note) notes.push(esc(e.note));
+            html += row(k[1], esc(e.seq), notes.join("<br>"));
+        });
+        return html + "</div>";
+    }
+
+    var TIER_LABEL = { 1: "Easy", 2: "Needs spacing", 3: "Strict spacing", 4: "2 hits to poke" };
+
+    function tierText(t, text) {
+        return '<span class="tier-' + t + '">' + esc(text) + "</span>";
+    }
+
+    // Shield poking: how to poke through the opponent's shield. "Can't poke" (tier 0) is left out.
+    function pokeSection(ch) {
+        var list = (D.poke && D.poke[ch.name]) || [];
+        if (!list.length) return "";
+        var html = '<div class="sectionTitle">Shield poke</div><div class="moreInfo">';
+        list.forEach(function (e) {
+            var pre = e.variant ? esc(e.variant) + " — " : "";
+            if (e.floor && e.floor.tier > 0) {
+                var notes = (e.alts || []).map(function (a) {
+                    return "Tier " + a.tier + ": " + esc(a.move);
+                }).concat((e.notes || []).map(esc));
+                html += row("Floor", pre + tierText(e.floor.tier, e.floor.move), notes.join("<br>"));
+            } else if (e.notes && e.notes.length) {
+                html += row("Floor", '<span class="noData">no floor poke</span>', e.notes.map(esc).join("<br>"));
+            }
+            [["front", "Front foot"], ["back", "Back foot"], ["head", "Head"]].forEach(function (p) {
+                var t = e.parts && e.parts[p[0]];
+                if (t > 0) html += row(p[1], tierText(t, TIER_LABEL[t]), "");
+            });
+        });
+        return html + "</div>";
+    }
+
+    function crouchItems(ch) {
+        return (D.crouch && D.crouch[ch.name]) || [];
+    }
+
+    function crouchNote(ch) {
+        var items = crouchItems(ch);
+        if (!items.length) return "";
+        return '<div class="crouchNote"><span class="lbl">Crouch under</span>' + items.map(esc).join(" · ") + "</div>";
+    }
+
     function charSection(ch, withHeading) {
         var html = "";
         if (withHeading) {
             html += '<div class="charIco" style="background-position-x:' + ((ch.sprite - 1) * -50) + 'px"></div>' +
                 '<div class="charSubTitle">' + esc(ch.name) + "</div>";
         }
-        return html + ztdSection(ch) + specificSection(ch) + otherSection(ch);
+        return html + crouchNote(ch) + ztdSection(ch) + specificSection(ch) + gameplanSection(ch) + otherSection(ch) + bairDtilt(ch) + ledgeSection(ch) + pokeSection(ch);
     }
 
     // ------------------------------------------------------------ render
@@ -359,7 +452,8 @@
         var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", next);
         store("theme", next);
-        syncThemeIcon();
+        buildLedgeTips();
+    syncThemeIcon();
     };
 
     function syncThemeIcon() {
@@ -383,6 +477,14 @@
         el.focus();
         id === "char" ? updateChar() : updateStage();
     };
+
+    function buildLedgeTips() {
+        var t = document.getElementById("ledgeTips");
+        if (!t) return;
+        t.innerHTML = (D.ledgeTips || []).map(function (x) {
+            return "<tr><td width=\"32%\"><b>" + esc(x.move) + "</b></td><td>" + esc(x.text) + "</td></tr>";
+        }).join("");
+    }
 
     window.addEventListener("hashchange", showPage);
     document.getElementById("char").addEventListener("input", updateChar);
