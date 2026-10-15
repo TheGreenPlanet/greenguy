@@ -3,7 +3,7 @@
 
 Run:  python3 -I scripts/build_data.py
 """
-import csv, json, re, sys
+import csv, json, math, re, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -208,7 +208,14 @@ def parse_project_l(path):
 
 
 def fmt_seq(seq):
-    return re.sub(r"\bupB\b", "up B", seq)
+    seq = re.sub(r"\bupB\b", "up B", seq)
+    # lazily noted in the source: "dair nair dair up B" is really the fast-fall version
+    if re.fullmatch(r"(?i)dair nair dair up B", seq.strip()):
+        seq = "dair nair dair ff up B"
+    # same shorthand: a bare "dair up B" is the fast-fall version
+    if re.fullmatch(r"(?i)dair up B", seq.strip()):
+        seq = "dair ff up B"
+    return seq
 
 
 plan = {}
@@ -522,6 +529,234 @@ for rn in range(2, 200):
         for n in resolve(label)[0]:
             bair_dtilt[n] = entry
 
+# ---------------------------------------------------------------- rage / knockback model
+# Knockback (Ultimate): KB = ((((p/10 + p*d/20) * 200/(w+100) * 1.4) + 18) * KBG/100 + BKB) * r, r = rage multiplier.
+# Validated below against the Data Compendium's tumble-by-rage table (dthrow: 3%, BKB 45, KBG 135).
+def rage_mult(own):
+    own = min(max(own, 35), 150)
+    return 1 + (own - 35) / 115 * 0.1
+
+
+def kb(p, w, d, bkb, kbg, r=1.0):
+    return ((((p / 10 + p * d / 20) * 200 / (w + 100) * 1.4) + 18) * (kbg / 100) + bkb) * r
+
+
+DTHROW = (3, 45, 135)           # damage, BKB, KBG (throw hit)
+# The hit that decides the ff window: Luigi's clean dair (the spike). Only this choice reproduces all the in-game tests.
+DAIR = (10, 30, 80)
+
+weights = {}
+_unres_before = set(unresolved)
+for r in rows(LUIGI / "up-b/Luigi Up-B Stuff & Setups - Kill by weight.csv")[1:]:
+    r += [""] * 2
+    if not r[0] or not re.fullmatch(r"\d+", r[1]):
+        continue
+    # the sheet's joke names for a few characters
+    label = {"Educated Mario": "Dr. Mario", "Pit, but edgy": "Dark Pit", "M. Game & Watch": "Mr. Game & Watch"}.get(r[0].strip(), r[0])
+    for n in resolve(label)[0]:
+        weights.setdefault(n, int(r[1]))
+unresolved.intersection_update(_unres_before)   # junk rows in that CSV ("Shield Shulk" etc.) are not worth reporting
+
+
+def tumble_pct(w, own, K):
+    for p in range(0, 400):  # opponent percent before the throw; the formula uses the percent after its damage
+        if kb(p + DTHROW[0], w, *DTHROW, r=rage_mult(own)) > K:
+            return p
+    return None
+
+
+# fit the tumble threshold K on the table
+tum_rows = []
+for n, lst in tumble.items():
+    base = [x for x in lst if "variant" not in x]
+    if not base or n not in weights or n == "Shulk":
+        continue
+    try:
+        obs = {0: int(base[0]["p"].rstrip("%"))}
+        for k in ("60", "80", "100", "150"):
+            obs[int(k)] = int(base[0]["rage"][k].rstrip("%"))
+    except (KeyError, ValueError):
+        continue
+    tum_rows.append((n, weights[n], obs))
+best_K, best_err = None, None
+for K10 in range(600, 1000):
+    K = K10 / 10
+    err = sum(abs(tumble_pct(w, own, K) - v) for _, w, obs in tum_rows for own, v in obs.items())
+    if best_err is None or err < best_err:
+        best_K, best_err = K, err
+n_pts = sum(len(o) for _, _, o in tum_rows)
+print(f"rage model: tumble threshold K={best_K}, mean abs error {best_err / n_pts:.2f}% over {len(tum_rows)} characters x 5 rage levels")
+
+# characters missing from the Compendium table: compute the same columns from the model
+calc_tumble = []
+for n, w in weights.items():
+    if n in tumble or n not in CANON.values():
+        continue
+    p0 = tumble_pct(w, 0, best_K)
+    tumble[n] = [{"p": f"{p0}%", "rage": {str(o): f"{tumble_pct(w, o, best_K)}%" for o in (60, 80, 100, 150)}, "calc": True}]
+    calc_tumble.append(n)
+if calc_tumble:
+    print("tumble % computed for:", ", ".join(sorted(calc_tumble)))
+
+# The ff-route windows move like a knockback threshold. An opponent at integer percent p, with Luigi at `own`%,
+# plays like an opponent at p_eq = (p + c) * r - c at 0 rage; the route works when lab_lo <= p_eq < lab_hi + 1
+# (a lab window "20-22%" covers 20.0 up to just under 23). c = B/A + D: the dair's knockback constant plus D, the
+# damage dealt before that hit (fitted from luigi/rage-tests/rage-tests.csv).
+_d, _b, _k = DAIR
+_q, _s = 1 / 10 + _d / 20, _k / 100
+
+
+def c_hit(w):
+    a = _q * (200 * 1.4 / (w + 100)) * _s
+    return (18 * _s + _b) / a
+
+
+def ff_window(name):
+    for b in plan.get(name, []):
+        if not b["label"]:
+            for e in b["out"]:
+                if re.fullmatch(r"(?i)dair nair dair ff up B", e["seq"]):
+                    nums = list(map(int, re.findall(r"\d+", e["w"])))
+                    return nums[0], nums[-1]
+    return None
+
+
+def works(p, cl, ch, own, lo, hi):
+    r = rage_mult(own)
+    return lo <= (p + cl) * r - cl and (p + ch) * r - ch < hi + 1
+
+
+tests = []
+for r in rows(LUIGI / "rage-tests/rage-tests.csv")[1:]:
+    if len(r) >= 4 and r[0]:
+        tests.append((r[0], r[1], int(r[2]) if r[2] else None, int(r[3])))
+
+
+def predict(kind, cl, ch, own, lo, hi):
+    if kind == "last_rage_at_zero":
+        ok = [o for o in range(35, 151) if works(0, cl, ch, o, lo, hi)]
+        return max(ok) if ok else None
+    ok = [p for p in range(0, 120) if works(p, cl, ch, own, lo, hi)]
+    if not ok:
+        return None
+    return min(ok) if kind == "lowest_opponent_pct" else max(ok)
+
+
+def fit(kinds, D_low, D_high, which):
+    best = None
+    for d10 in range(0, 1200):
+        D = d10 / 10
+        dl, dh = (D, D_high) if which == "low" else (D_low, D)
+        err = 0.0
+        for name, kind, own, val in tests:
+            if kind not in kinds or name not in weights or ff_window(name) is None:
+                continue
+            lo, hi = ff_window(name)
+            c = c_hit(weights[name])
+            got = predict(kind, c + dl, c + dh, own, lo, hi)
+            err += 1e4 if got is None else (got - val) ** 2
+        if best is None or err < best[0]:
+            best = (err, [D])
+        elif err == best[0]:
+            best[1].append(D)
+    return best[0], (min(best[1]) + max(best[1])) / 2, (min(best[1]), max(best[1]))
+
+
+# two offsets: the window's low edge (where the previous route hands over) and its high edge (where the spike
+# starts) are decided by different hits, so they have different damage already dealt. Fit them alternately.
+D_low, D_high = 45.0, 45.0
+for _ in range(3):
+    e_hi, D_high, r_hi = fit({"highest_opponent_pct", "last_rage_at_zero"}, D_low, D_high, "high")
+    e_lo, D_low, r_lo = fit({"lowest_opponent_pct"}, D_low, D_high, "low")
+print(f"rage model: D_low={D_low} {r_lo} (err {e_lo}), D_high={D_high} {r_hi} (err {e_hi}) over {len(tests)} test rows")
+# ---- ff windows for characters Project L has no ff row for
+# The knockback of the clean dair at the window's upper edge (the spike) and lower edge is nearly the same value for
+# everyone Project L does list, so a missing window can be computed from the character's weight. Tested windows
+# (luigi/ztd/ff-overrides.csv) win over computed ones.
+def _A(w):
+    return _q * (200 * 1.4 / (w + 100)) * _s
+
+
+_lab = {n: ff_window(n) for n in plan if n in weights and ff_window(n)}
+K_high = sum(_A(weights[n]) * (hi + 1 + c_hit(weights[n]) + D_high) for n, (lo, hi) in _lab.items()) / len(_lab)
+_lows = [_A(weights[n]) * (lo + c_hit(weights[n]) + D_low) for n, (lo, hi) in _lab.items() if lo > 0]
+K_low = sum(_lows) / len(_lows)
+print(f"ff windows: spike knockback {K_high:.1f}, hand-over knockback {K_low:.1f} (from {len(_lab)} characters)")
+
+_overrides = {}
+for r in rows(LUIGI / "ztd/ff-overrides.csv")[1:]:
+    if len(r) >= 3 and r[0]:
+        _overrides[r[0]] = (int(r[1]) if r[1] else None, int(r[2]) if r[2] else None)
+
+# The low edge of the ff window is "the final Up B kills": lab low edge = Up B KO% (Final Destination) - the damage
+# the combo deals. Measure that damage from the characters Project L lists.
+def _upb_fd(name):
+    for e in moves.get(name, {}).get("upBKO", []):
+        if "variant" not in e:
+            m = re.search(r"\d+", e["fd"])
+            return int(m.group(0)) if m else None
+    return None
+
+
+_diffs = sorted(_upb_fd(n) - lo for n, (lo, hi) in _lab.items() if lo > 0 and _upb_fd(n) is not None)
+COMBO_DMG = _diffs[len(_diffs) // 2]
+_within = sum(abs(_upb_fd(n) - COMBO_DMG - lo) <= 1 for n, (lo, hi) in _lab.items() if lo > 0 and _upb_fd(n) is not None)
+print(f"ff windows: low edge = Up B KO% (FD) - {COMBO_DMG}; within 1 of the lab edge for {_within} of {len(_diffs)} characters")
+
+_ROUTE = re.compile(r"^(dair nair dair(\s|$)|dair (uair|wbair|zair|ff) up B$)", re.I)
+
+
+def _win(lo, hi):
+    return f"{lo}-{hi}%" if hi > lo else f"{lo}%"
+
+
+MIN_FF_WIDTH = 3   # opponent percents; narrower ff windows are not shown
+added = []
+for name in sorted(n for n in plan if n in weights and n not in _lab):
+    blk = next((b for b in plan[name] if not b["label"]), None)
+    if blk is None:
+        continue
+    w = weights[name]
+    hi_model = math.ceil(K_high / _A(w) - c_hit(w) - D_high - 1e-9) - 1
+    ko = _upb_fd(name)
+    lo_model = max(0, ko - COMBO_DMG) if ko is not None else max(0, math.ceil(K_low / _A(w) - c_hit(w) - D_low - 1e-9))
+    if name in _overrides:
+        o_lo, o_hi = _overrides[name]
+        if o_hi is None:                      # tested and not practical: no ff route is shown for this character
+            added.append(f"{name} skipped (not practical)")
+            continue
+        lo, hi, calc = (o_lo if o_lo is not None else lo_model), o_hi, False
+    else:
+        lo, hi, calc = lo_model, hi_model, True
+    if hi - lo + 1 < MIN_FF_WIDTH:         # a 1-2% window isn't something you can plan around
+        added.append(f"{name} skipped (window {_win(lo, hi)} too narrow)")
+        continue
+    kept = []
+    for e in blk["out"]:
+        nums = list(map(int, re.findall(r"\d+", e["w"])))
+        if not _ROUTE.match(e["seq"]) or not nums:
+            kept.append(e)
+            continue
+        a, b = nums[0], nums[-1]
+        if b < lo or a > hi:                       # no overlap
+            kept.append(e)
+            continue
+        if a < lo:                                 # keep the part below the ff window
+            kept.append({**e, "w": _win(a, lo - 1)})
+        if b > hi:                                 # and the part above it
+            kept.append({**e, "w": _win(hi + 1, b)})
+    row = {"w": _win(lo, hi), "seq": "dair nair dair ff up B"}
+    if calc:
+        row["calc"] = True
+    kept.append(row)
+    kept.sort(key=lambda e: int(re.findall(r"\d+", e["w"])[0]) if re.findall(r"\d+", e["w"]) else 0)
+    blk["out"] = kept
+    added.append(f"{name} {_win(lo, hi)}{' (calculated)' if calc else ' (tested)'}")
+print("ff window added for:", "; ".join(added))
+
+rage_c = {n: {"lo": round(c_hit(w) + D_low, 2), "hi": round(c_hit(w) + D_high, 2)}
+          for n, w in weights.items() if n in CANON.values()}
+
 # matchup gameplans (hand-compacted from the Discord notes)
 matchup = {}
 mfile = json.loads((LUIGI / "gameplans/matchups.json").read_text(encoding="utf-8"))
@@ -536,7 +771,7 @@ for e in mfile["entries"]:
 
 out = {"roster": roster, "plan": plan, "moves": moves, "charSpecific": char_specific, "tumble": tumble,
        "crouch": crouch, "ledge": ledge, "ledgeTips": ledge_tips, "poke": shield_poke, "bairDtilt": bair_dtilt,
-       "matchup": matchup}
+       "matchup": matchup, "rageC": rage_c}
 OUT.write_text("window.LUIGI_DATA = " + json.dumps(out, ensure_ascii=True, separators=(",", ":")) + ";\n", encoding="utf-8")
 
 # ---------------------------------------------------------------- report

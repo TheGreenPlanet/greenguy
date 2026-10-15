@@ -1,0 +1,4 @@
+character,lo,hi,note
+Fox,3,9,"tested on Small Battlefield at 0 rage: works 3-9%, spikes at 10%, 2% too hard to perform"
+King K. Rool,,24,"tested on Small Battlefield at 0 rage: kills at 24%, spikes at 25%, no kill at 23% (low edge from the Up B kill rule)"
+Piranha Plant,,,"tested: too hard to perform, so no ff route is shown (blank lo and hi = skip)"

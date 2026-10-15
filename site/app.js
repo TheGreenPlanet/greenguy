@@ -126,7 +126,8 @@
     }
 
     function fmtSeq(seq) {
-        return seq.replace(/\bup B\b/g, "upB").split(/\s+/).join(" → ").replace(/\bupB\b/g, "up B");
+        // non-breaking space so "up" and "B" never get split across two lines
+        return seq.replace(/\bup B\b/g, "upB").split(/\s+/).join(" → ").replace(/\bupB\b/g, "up\u00A0B");
     }
 
     function tumbleEntries(ch) {
@@ -141,6 +142,67 @@
                 var n = parseInt(list[i].p, 10);
                 return isNaN(n) ? null : n;
             }
+        }
+        return null;
+    }
+
+    // Rage multiplier on the attacker's knockback (Ultimate): 1.0 up to 35%, +0.1 spread over 35-150%.
+    function rageMult(own) {
+        return 1 + (Math.min(Math.max(own, 35), 150) - 35) / 115 * 0.1;
+    }
+
+    // Rage scales knockback, which is the same as the opponent being at a higher percent, so every labbed (0 rage) window
+    // slides down as Luigi's own % goes up. The knockback-per-percent constants are calibrated per character from the dthrow
+    // tumble table (0% and 150% rage); that reproduces its 60/80/100% columns to ~1%. For the ZTD windows it is an
+    // estimate: they depend on dair / nair knockback, which isn't in the data.
+    // Rage model. Rage multiplies knockback, so every labbed (0 rage) window slides down as Luigi's own % goes up:
+    //   p' = (p + c) / rage - c
+    // c comes from the build (scripts/build_data.py): the knockback formula with Luigi's late dair numbers and the
+    // character's weight, plus one fitted offset D for the damage already dealt in the combo (the clean dair, the
+    // spike, is the hit that decides the window; it's the only choice that fits all the in-game tests). It reproduces the
+    // Data Compendium's tumble-by-rage table (mean error ~0.3%) and D is fitted to the in-game tests in
+    // luigi/rage-tests/rage-tests.csv. It is still an estimate: the ZTD windows are only labbed at 0 rage.
+    // Fallback for characters without a weight: a constant fitted from their tumble row.
+    var RAGE_A = 0.36, RAGE_B = 51;
+
+    function rageModel(ch) {
+        var rc = D.rageC && D.rageC[ch.name];
+        if (rc) return { cl: rc.lo, ch: rc.hi };
+        var base = tumbleEntries(ch).filter(function (t) { return !t.variant; })[0];
+        if (!base || !base.rage || !base.rage["150"]) return null;
+        var t0 = parseInt(base.p, 10), t150 = parseInt(base.rage["150"], 10);
+        if (isNaN(t0) || isNaN(t150) || t0 <= t150) return null;
+        var c = RAGE_A * (11 * (t0 - t150) - t0) + RAGE_B;
+        return { cl: c, ch: c };
+    }
+
+    // Integer opponent percents where a labbed window [lo, hi] (0 rage) still works at `own`% rage, or null.
+    // An opponent at p, with Luigi at `own`%, plays like p_eq = (p + c) * r - c at 0 rage; the route works while
+    // lo <= p_eq < hi + 1 (a lab window "20-22%" covers 20.0 up to just under 23). The low edge and the high edge use
+    // different constants (cl, ch): different hits decide them.
+    function rageRange(m, lo, hi, own) {
+        var r = rageMult(own), eps = 1e-9;
+        var pl = Math.max(0, Math.ceil((lo + m.cl) / r - m.cl - eps));
+        var ph = Math.ceil((hi + 1 + m.ch) / r - m.ch - eps) - 1;
+        return ph >= pl ? [pl, ph] : null;
+    }
+
+    function rageWindow(ch, w, own) {
+        var m = rageModel(ch);
+        if (!m) return null;
+        var b = winBounds(w);
+        var rg = rageRange(m, b[0], b[1], own);
+        if (!rg) return "none";   // the whole window has slid below 0%: this route no longer applies at that rage
+        return rg[1] > rg[0] ? rg[0] + "–" + rg[1] + "%" : rg[0] + "%";
+    }
+
+    // Highest own % at which a window still has any opponent percent left; null if it survives to 150%.
+    function rageCutoff(ch, w) {
+        var m = rageModel(ch);
+        if (!m) return null;
+        var b = winBounds(w);
+        for (var own = 36; own <= 150; own++) {
+            if (!rageRange(m, b[0], b[1], own)) return own - 1;
         }
         return null;
     }
@@ -182,7 +244,7 @@
         tumbleEntries(ch).forEach(function (t) {
             var rage = Object.keys(t.rage || {}).map(function (k) { return k + "% rage: " + t.rage[k]; }).join(" · ");
             html += '<div class="ztdSub">' + (t.variant ? esc(t.variant) + " — " : "") +
-                "dthrow tumbles at <b>" + esc(t.p) + "</b>" + (rage ? '<br><span class="lbl">' + esc(rage) + "</span>" : "") + "</div>";
+                "dthrow tumbles at <b>" + (t.calc ? "~" : "") + esc(t.p) + "</b>" + (t.calc ? ' <span class="lbl">calculated</span>' : "") + (rage ? '<br><span class="lbl">' + esc(rage) + "</span>" : "") + "</div>";
         });
         html += "</div>";
 
@@ -191,9 +253,55 @@
             if (b.label && !b.stage) {
                 html += '<div class="moreInfo-row"><div class="moreInfo-disclaimer"><b>' + esc(b.label) + "</b></div></div>";
             }
-            b.rows.forEach(function (r) {
+            var ffIdx = -1;
+            if (b === blocks[0]) {
+                for (var k = 0; k < b.rows.length; k++) {
+                    if (/^dair nair dair ff up B$/i.test(b.rows[k].seq)) { ffIdx = k; break; }
+                }
+            }
+            b.rows.forEach(function (r, idx) {
                 var guess = tumble !== null && winBounds(r.w)[0] >= tumble;
-                html += row(pretty(r.w), (guess ? '<span class="lbl">DI guess</span> ' : "") + esc(fmtSeq(r.seq)), "");
+                var combo = (guess ? '<span class="lbl">DI guess</span> ' : "") +
+                    (r.calc ? '<span class="lbl">calculated</span> ' : "") + esc(fmtSeq(r.seq));
+                // routes before the ff route stop being valid once your rage pushes the ff route down over them
+                if (ffIdx > -1 && idx < ffIdx) {
+                    var stop = rageCutoff(ch, r.w);
+                    if (stop !== null) {
+                        stop = Math.max(35, Math.floor(stop / 5) * 5);  // round down to a clean number: switch a bit early, not late
+                        combo += '<div class="stopRow"><span class="rageTag stop">move to ff at ' + stop + "% rage</span></div>";
+                    }
+                }
+                // the ff route starts earlier as Luigi's own % (rage) goes up: same row, windows in the left column,
+                // rage labels in the right column under the real combo
+                var rageRows = "";
+                if (b === blocks[0] && /^dair nair dair ff up B$/i.test(r.seq)) {
+                    var wins = {};
+                    [50, 100, 150].forEach(function (own) {
+                        var w = rageWindow(ch, r.w, own);
+                        wins[own] = w;
+                        if (w && w !== "none") {   // rage levels where the route is gone aren't listed
+                            rageRows += '<div class="moreInfo-title rageT">' + w + "</div>" +
+                                '<div class="moreInfo-value rageV"><div class="valBody"><span class="rageTag">' +
+                                own + "% rage</span></div></div>";
+                        }
+                    });
+                    // the 150% window is gone: say where the last 0% ZTD is still possible
+                    if (wins[150] === "none") {
+                        var last = rageCutoff(ch, r.w);
+                        if (last !== null) {
+                            rageRows += '<div class="moreInfo-title rageT">0%</div>' +
+                                '<div class="moreInfo-value rageV"><div class="valBody"><span class="rageTag">' +
+                                "up to " + last + "% rage</span></div></div>";
+                        }
+                    }
+                }
+                if (rageRows) {
+                    html += '<div class="moreInfo-row ffGroup">' +
+                        '<div class="moreInfo-title">' + pretty(r.w) + "</div>" +
+                        '<div class="moreInfo-value"><div class="valBody">' + combo + "</div></div>" + rageRows + "</div>";
+                } else {
+                    html += row(pretty(r.w), combo, "");
+                }
             });
         });
         return html + "</div>";
@@ -225,12 +333,16 @@
     }
 
     function gameplanSection(ch) {
-        var g = D.matchup && D.matchup[ch.name];
-        if (!g) return "";
+        var g = (D.matchup && D.matchup[ch.name]) || { "do": [], dont: [] };
+        var crouch = crouchItems(ch);
+        if (!g["do"].length && !g.dont.length && !g.stage && !crouch.length) return "";
         var html = '<div class="sectionTitle">Gameplan</div><div class="gp">';
         if (g["do"].length) html += '<div class="gpb do"><div class="gph">Do</div>' + gpList(g["do"]) + "</div>";
         if (g.dont.length) html += '<div class="gpb dont"><div class="gph">Avoid</div>' + gpList(g.dont) + "</div>";
         if (g.stage) html += '<div class="gpStage"><b>Stage</b> ' + esc(g.stage) + "</div>";
+        if (crouch.length) {
+            html += '<div class="gpSide"><span class="lbl">Crouch under</span> ' + crouch.map(esc).join(" · ") + "</div>";
+        }
         return html + "</div>";
     }
 
@@ -334,7 +446,7 @@
             var notes = [];
             if (e.dmg) notes.push("deals " + esc(e.dmg) + "%");
             if (e.note) notes.push(esc(e.note));
-            html += row(k[1], esc(e.seq), notes.join("<br>"));
+            html += row(k[1], esc(e.seq.replace(/\bup B\b/g, "up\u00A0B")), notes.join("<br>"));
         });
         return html + "</div>";
     }
@@ -372,20 +484,14 @@
         return (D.crouch && D.crouch[ch.name]) || [];
     }
 
-    function crouchNote(ch) {
-        var items = crouchItems(ch);
-        if (!items.length) return "";
-        return '<div class="crouchNote"><span class="lbl">Crouch under</span>' + items.map(esc).join(" · ") + "</div>";
-    }
-
     function charSection(ch, withHeading) {
         var html = "";
         if (withHeading) {
             html += '<div class="charIco" style="background-position-x:' + ((ch.sprite - 1) * -50) + 'px"></div>' +
                 '<div class="charSubTitle">' + esc(ch.name) + "</div>";
         }
-        return html + crouchNote(ch) + ztdSection(ch) + specificSection(ch) + gameplanSection(ch) +
-            otherSection(ch) + bairDtilt(ch) + ledgeSection(ch) + pokeSection(ch);
+        return html + ztdSection(ch) + specificSection(ch) + otherSection(ch) +
+            gameplanSection(ch) + bairDtilt(ch) + ledgeSection(ch) + pokeSection(ch);
     }
 
     // ------------------------------------------------------------ render

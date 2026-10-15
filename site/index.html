@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8">
     <title>greenguy.gg | Luigi ZTD Percents & more</title>
-    <link rel="stylesheet" type="text/css" href="main.css?v=31">
-    <link rel="stylesheet" type="text/css" href="site.css?v=31">
+    <link rel="stylesheet" type="text/css" href="main.css?v=68">
+    <link rel="stylesheet" type="text/css" href="site.css?v=68">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="description" content="Look up Luigi's zero-to-death windows and kill confirm percents for every character and stage in Super Smash Bros. Ultimate.">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -93,9 +93,8 @@
            A "DI guess from here" line in the ZTD list marks where that starts.</p>
         <br>
 
-        <span class="questionTitle">Crouch under (blue text)</span>
-        <p>If the character has a projectile Luigi can crawl under, a blue "Crouch under" line appears right below
-           their name with the list. Data by CrimsonStarfall.</p>
+        <span class="questionTitle">Crouch under</span>
+        <p>A small note at the bottom of the gameplan lists projectiles Luigi can crawl under. Data by CrimsonStarfall.</p>
         <br>
 
         <span class="questionTitle">Ledge hang</span>
@@ -128,6 +127,33 @@
         <p>Short matchup notes: <b class="gp-do">Do</b> is what works for Luigi, <b class="gp-dont">Watch out</b> is
            what to avoid or respect, and "Stage" lists stage advice where the notes have it. Compacted from the Luigi
            Discord matchup notes; only characters with notes have a gameplan.</p>
+        <br>
+
+        <span class="questionTitle">ff with rage (estimate)</span>
+        <p>Rage multiplies the knockback you deal by up to 1.1× (from your 35% to 150%), which is the same as the
+           opponent being at a higher percent. So at higher rage the dair → nair → dair → ff → up B route starts at a
+           lower opponent percent. Earlier routes (like the uair version) carry a "move to ff at X% rage" tag: from there the ff route has slid down
+           over their whole window, so go straight for ff. X is rounded down to a multiple of 5. A rage level is left out when it has pushed the whole window below 0% (that route no longer applies there).
+           When 150% is left out, an extra "0% up to N% rage" line gives the highest rage at which the ff route still
+           works at 0%. The lines under the ff route read: "3–5%" next to "100% rage" means that when you are at 100%, use the ff route at opponent percents 3–5%.
+           The numbers come from the real knockback formula with Luigi's down throw and clean dair values and each
+           character's weight. It reproduces the tumble-by-rage table to within about 0.3%, and one extra offset is
+           fitted to five in-game tests (Jigglypuff: the ff route works at 0% until 114% rage; Donkey Kong at 150% rage:
+           works at 8% and 9%; Mario at 100% rage: works from 4% to 8%). The low and high edge of each window use
+           slightly different constants, since different hits decide them. All tests were done on Small Battlefield, so
+           other stages are not verified. The ZTD windows themselves are only labbed at 0 rage, so treat everything here as an estimate until
+           more characters are tested.</p>
+        <br>
+
+        <span class="questionTitle">Calculated ff windows</span>
+        <p>Project L lists an ff route for most characters but not all. For the rest the window is computed. The low
+           edge is "the final Up B has to kill": it is the character's Up B KO% (Final Destination) minus the 42%
+           the combo deals, which matches Project L's own low edge for nearly every character it lists. The high edge
+           is where the clean dair starts to spike, which is almost the same knockback for everyone and so follows
+           from the character's weight (within about 1% for 87%). Those rows carry a small "calculated" label; the
+           earlier routes are trimmed so windows never overlap. Fox uses a tested window (Small Battlefield). A computed or tested window narrower than 3% is not shown, since
+           you can't plan around it: that leaves King K. Rool and Bowser (1-2% wide) on their other routes, and Piranha
+           Plant was tested and is too hard to perform.</p>
         <br>
 
         <span class="questionTitle">Forms and variants</span>
@@ -167,7 +193,7 @@
            "not labbed yet".</p>
     </div>
 
-    <script src="data.js?v=31" charset="utf-8"></script>
-    <script src="app.js?v=31" charset="utf-8"></script>
+    <script src="data.js?v=68" charset="utf-8"></script>
+    <script src="app.js?v=68" charset="utf-8"></script>
 </body>
 </html>

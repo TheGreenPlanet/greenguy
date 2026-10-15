@@ -1,0 +1,6 @@
+character,kind,own_pct,opponent_pct,stage
+Jigglypuff,last_rage_at_zero,,114,Small Battlefield
+Donkey Kong,lowest_opponent_pct,150,8,Small Battlefield
+Donkey Kong,highest_opponent_pct,150,9,Small Battlefield
+Mario,lowest_opponent_pct,100,4,Small Battlefield
+Mario,highest_opponent_pct,100,8,Small Battlefield

@@ -1,0 +1,6 @@
+character,stage,own_pct,lowest_working_opponent_pct,note
+Mario,Small Battlefield,0,11,"works 11-14%; stage not stated, assumed Small Battlefield"
+Mario,Small Battlefield,100,4,"works 4-8%; 3% doesn't kill"
+King K. Rool,Small Battlefield,0,24,"23% no kill, 25% spikes"
+Fox,Small Battlefield,0,3,"2% too hard to perform (so physical edge may be 2)"
+Donkey Kong,Small Battlefield,150,8,"works 8-9%"

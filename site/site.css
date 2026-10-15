@@ -1,9 +1,12 @@
 /* Overrides and additions on top of main.css (copied from the monke.gg reference). */
 :root {
-	--tier4: #ff5c5c;
-	--easy: #3ecf6a;
-	--medium: #ffe14d;
-	--hard: #ff9f1a;
+	--tag-border: rgba(255, 255, 255, 0.3);
+	--tag-bg: rgba(0, 0, 0, 0.28);
+	--gp-text: #d9d9d9;
+	--tier4: #cf8383;
+	--easy: #9bbf8f;
+	--medium: #d9c27f;
+	--hard: #d49a6b;
 	--crouch: #4fd1ff;
 	--percent-highlight: #5dff8a;
 	--stage-name: #b6f5c4;
@@ -12,10 +15,13 @@
 }
 
 [data-theme="light"] {
-	--tier4: #c62828;
-	--easy: #1f9a48;
-	--medium: #9a8b00;
-	--hard: #c45f00;
+	--tag-border: rgba(0, 0, 0, 0.35);
+	--tag-bg: rgba(0, 0, 0, 0.06);
+	--gp-text: #444;
+	--tier4: #a14a4a;
+	--easy: #5a8352;
+	--medium: #8a7425;
+	--hard: #a5622f;
 	--crouch: #0a6fa0;
 	--percent-highlight: #17803a;
 	--stage-name: #1f6b36;
@@ -132,24 +138,21 @@
 
 .moreInfo-value-note { max-width: none; margin-top: 6px; }
 
-.crouchNote { color: var(--crouch); font-size: 16px; font-weight: bold; margin: 10px 0 0; }
-.crouchNote .lbl { color: var(--crouch); display: block; font-size: 12px; letter-spacing: 1px; opacity: 0.85; }
 
-.ledge-easy { color: var(--easy); font-weight: bold; }
-.ledge-medium { color: var(--medium); font-weight: bold; }
-.ledge-hard { color: var(--hard); font-weight: bold; }
+.ledge-easy { color: var(--easy); font-weight: 600; }
+.ledge-medium { color: var(--medium); font-weight: 600; }
+.ledge-hard { color: var(--hard); font-weight: 600; }
 
-.tier-1 { color: var(--easy); font-weight: bold; }
-.tier-2 { color: var(--medium); font-weight: bold; }
-.tier-3 { color: var(--hard); font-weight: bold; }
-.tier-4 { color: var(--tier4); font-weight: bold; }
+.tier-1 { color: var(--easy); font-weight: 600; }
+.tier-2 { color: var(--medium); font-weight: 600; }
+.tier-3 { color: var(--hard); font-weight: 600; }
+.tier-4 { color: var(--tier4); font-weight: 600; }
 
-.gp-do { color: var(--easy); font-weight: bold; }
-.gp-dont { color: var(--tier4); font-weight: bold; }
+.gp-do { color: var(--easy); font-weight: 600; }
+.gp-dont { color: var(--tier4); font-weight: 600; }
 .valBody .sub { margin: 0 0 6px; text-align: left; }
 
 /* ================= glanceable layout ================= */
-.crouchNote .lbl { margin-right: 6px; }
 
 /* gameplan */
 .gp { display: grid; gap: 8px; margin: 14px 0; text-align: left; }
@@ -160,6 +163,19 @@
 .gpb.do .gph { color: var(--easy); }
 .gpb.dont .gph { color: var(--tier4); }
 .gpb ul { margin: 0; padding-left: 18px; }
-.gpb li { font-size: 14px; line-height: 1.4; margin: 3px 0; }
+.gpb li { color: var(--gp-text); font-size: 14px; line-height: 1.4; margin: 3px 0; }
 .more summary { color: var(--text-secondary); cursor: pointer; font-size: 12px; margin-top: 4px; }
 .gpStage { color: var(--stage-name); font-size: 13px; padding: 0 4px; }
+.gpSide { color: var(--text-secondary); font-size: 12px; opacity: 0.7; padding: 0 4px; }
+.gpSide .lbl { color: var(--medium); font-size: 11px; margin-right: 4px; }
+
+/* ff route + rage versions: one row, windows in the left column, rage labels under the combo on the right */
+.ffGroup { display: grid; grid-template-columns: 35% 1fr; }
+.ffGroup .moreInfo-title, .ffGroup .moreInfo-value { flex: none; min-width: 0; }
+.ffGroup .rageT { font-size: 15px; font-weight: 600; opacity: 0.85; padding-bottom: 3px; padding-top: 3px; }
+.ffGroup .rageV { padding-bottom: 3px; padding-top: 3px; }
+/* keep the real window and the shifted ones close together */
+.ffGroup > :nth-child(1), .ffGroup > :nth-child(2) { padding-bottom: 6px; }
+.ffGroup > :nth-last-child(1), .ffGroup > :nth-last-child(2) { padding-bottom: 10px; }
+.rageTag { background: var(--tag-bg); border: 1px solid var(--tag-border); border-radius: 10px; color: var(--question-title); font-size: 11px; font-weight: 600; letter-spacing: 0.5px; padding: 1px 8px; text-transform: uppercase; white-space: nowrap; }
+.stopRow { margin-top: 6px; }
