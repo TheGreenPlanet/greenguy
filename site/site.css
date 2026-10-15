@@ -147,3 +147,19 @@
 .gp-do { color: var(--easy); font-weight: bold; }
 .gp-dont { color: var(--tier4); font-weight: bold; }
 .valBody .sub { margin: 0 0 6px; text-align: left; }
+
+/* ================= glanceable layout ================= */
+.crouchNote .lbl { margin-right: 6px; }
+
+/* gameplan */
+.gp { display: grid; gap: 8px; margin: 14px 0; text-align: left; }
+.gpb { background: var(--row-odd); border-left: 4px solid var(--border-color); border-radius: 4px 10px 10px 4px; padding: 8px 12px 8px; }
+.gpb.do { border-left-color: var(--easy); }
+.gpb.dont { border-left-color: var(--tier4); }
+.gph { font-size: 12px; font-weight: bold; letter-spacing: 1.2px; margin-bottom: 2px; text-transform: uppercase; }
+.gpb.do .gph { color: var(--easy); }
+.gpb.dont .gph { color: var(--tier4); }
+.gpb ul { margin: 0; padding-left: 18px; }
+.gpb li { font-size: 14px; line-height: 1.4; margin: 3px 0; }
+.more summary { color: var(--text-secondary); cursor: pointer; font-size: 12px; margin-top: 4px; }
+.gpStage { color: var(--stage-name); font-size: 13px; padding: 0 4px; }

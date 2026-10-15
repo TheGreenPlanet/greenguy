@@ -102,6 +102,7 @@
         return one ? [parseInt(one[1], 10), Infinity] : null;
     }
 
+    // ------------------------------------------------------------ sections
     function row(title, value, note, cls) {
         return '<div class="moreInfo-row' + (cls ? " " + cls : "") + '">' +
             '<div class="moreInfo-title">' + title + "</div>" +
@@ -110,12 +111,7 @@
             "</div></div>";
     }
 
-    function sub(label, val) {
-        return '<span class="sub"><span class="lbl">' + label + "</span>" + pretty(val) + "</span>";
-    }
-
-    // ------------------------------------------------------------ sections
-    // Shown routes (DI out lists only, the common DI):
+    // Shown ZTD routes (DI out lists only, the common DI):
     //   dthrow > dair > nair > dair > ...        (low percents)
     //   dthrow > (DI guess) dair > uair/wBair/zair/ff > up B
     var ZTD_ROUTE = /^(dair nair dair(\s|$)|dair (uair|wbair|zair|ff) upB$)/i;
@@ -133,33 +129,57 @@
         return seq.replace(/\bup B\b/g, "upB").split(/\s+/).join(" → ").replace(/\bupB\b/g, "up B");
     }
 
+    function tumbleEntries(ch) {
+        return (D.tumble && D.tumble[ch.name]) || [];
+    }
+
+    // Base (non-variant) dthrow tumble percent as a number, or null
+    function tumbleAt(ch) {
+        var list = tumbleEntries(ch);
+        for (var i = 0; i < list.length; i++) {
+            if (!list[i].variant) {
+                var n = parseInt(list[i].p, 10);
+                return isNaN(n) ? null : n;
+            }
+        }
+        return null;
+    }
+
     function ztdSection(ch) {
         var stageNames = STAGES.map(function (s) { return s.name; });
         var all = ((D.plan && D.plan[ch.name]) || []).map(function (b) {
             return { label: b.label, rows: ztdRows(b), stage: stageNames.indexOf(b.label) > -1 };
         }).filter(function (b) { return b.rows.length; });
-        // A block labelled with a stage (Mario: Battlefield) replaces the standard plan on that stage and is hidden elsewhere.
+        // A block labelled with a stage (Mario: Battlefield) replaces the standard plan on that stage.
         var onStage = all.filter(function (b) { return b.stage && b.label === curStage.name; });
         var blocks = all.filter(function (b) { return !b.stage; });
         if (onStage.length) blocks = onStage;
         var html = '<div class="sectionTitle">Luigi Zero To Death (ZTD)</div>';
         if (!blocks.length) {
-            return html + '<div class="percentRange noData">No ZTD data</div>' +
-                '<div class="ztdSub">No dair → nair → dair route labbed for this character.</div>';
+            return html + '<div class="percentRange noData">No ZTD data</div>';
         }
-        // standard (unlabelled) group first
         blocks.sort(function (x, y) { return (x.label ? 1 : 0) - (y.label ? 1 : 0); });
+
+        // The big number only covers percents below the tumble %; from there on the follow-up is a DI guess.
+        var tumble = tumbleAt(ch);
         var lo = Infinity, hi = -Infinity;
         blocks[0].rows.forEach(function (r) {
             var b = winBounds(r.w);
+            if (tumble !== null && b[0] >= tumble) return;
             lo = Math.min(lo, b[0]);
-            hi = Math.max(hi, b[1]);
+            hi = Math.max(hi, tumble !== null ? Math.min(b[1], tumble - 1) : b[1]);
         });
+        if (!isFinite(lo)) {
+            tumble = null;
+            blocks[0].rows.forEach(function (r) {
+                var b = winBounds(r.w);
+                lo = Math.min(lo, b[0]);
+                hi = Math.max(hi, b[1]);
+            });
+        }
 
-        html += '<div class="ztdHeadline">';
-        html += '<div class="percentRange">' + lo + " - " + hi + "%</div>";
-        html += '<div class="ztdSub">dthrow → dair → … by their percent (DI out)</div>';
-        ((D.tumble && D.tumble[ch.name]) || []).forEach(function (t) {
+        html += '<div class="ztdHeadline"><div class="percentRange">' + lo + " - " + hi + "%</div>";
+        tumbleEntries(ch).forEach(function (t) {
             var rage = Object.keys(t.rage || {}).map(function (k) { return k + "% rage: " + t.rage[k]; }).join(" · ");
             html += '<div class="ztdSub">' + (t.variant ? esc(t.variant) + " — " : "") +
                 "dthrow tumbles at <b>" + esc(t.p) + "</b>" + (rage ? '<br><span class="lbl">' + esc(rage) + "</span>" : "") + "</div>";
@@ -172,10 +192,10 @@
                 html += '<div class="moreInfo-row"><div class="moreInfo-disclaimer"><b>' + esc(b.label) + "</b></div></div>";
             }
             b.rows.forEach(function (r) {
-                html += row(pretty(r.w), esc(fmtSeq(r.seq)), "");
+                var guess = tumble !== null && winBounds(r.w)[0] >= tumble;
+                html += row(pretty(r.w), (guess ? '<span class="lbl">DI guess</span> ' : "") + esc(fmtSeq(r.seq)), "");
             });
         });
-        html += '<div class="moreInfo-row"><div class="moreInfo-disclaimer">Windows by Project L (Venus).</div></div>';
         return html + "</div>";
     }
 
@@ -191,6 +211,29 @@
         return html + "</div>";
     }
 
+    // ---- gameplan: Do / Avoid cards
+    var GP_SHOW = 3;
+
+    function gpList(items) {
+        var first = items.slice(0, GP_SHOW).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("");
+        var rest = items.slice(GP_SHOW);
+        var more = rest.length
+            ? '<details class="more"><summary>+' + rest.length + " more</summary><ul>" +
+              rest.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></details>"
+            : "";
+        return "<ul>" + first + "</ul>" + more;
+    }
+
+    function gameplanSection(ch) {
+        var g = D.matchup && D.matchup[ch.name];
+        if (!g) return "";
+        var html = '<div class="sectionTitle">Gameplan</div><div class="gp">';
+        if (g["do"].length) html += '<div class="gpb do"><div class="gph">Do</div>' + gpList(g["do"]) + "</div>";
+        if (g.dont.length) html += '<div class="gpb dont"><div class="gph">Avoid</div>' + gpList(g.dont) + "</div>";
+        if (g.stage) html += '<div class="gpStage"><b>Stage</b> ' + esc(g.stage) + "</div>";
+        return html + "</div>";
+    }
+
     function entries(ch, key) {
         return (D.moves[ch.name] && D.moves[ch.name][key]) || [];
     }
@@ -201,26 +244,24 @@
 
     function stageUpB() {
         var bits = [];
-        if (typeof curStage.ceiling === "number") {
-            bits.push(curStage.ceiling === 0 ? "ceiling: no change" : "ceiling: ~" + Math.abs(curStage.ceiling) + "% earlier");
-        }
+        if (typeof curStage.ceiling === "number" && curStage.ceiling !== 0) bits.push("ceiling −" + Math.abs(curStage.ceiling) + "%");
         var pl = curStage.platforms;
-        if (pl) {
-            if (pl.all) bits.push("platform: " + pl.all + "% off minimum");
-            else bits.push("side platforms: " + pl.side + "% · top platform: " + pl.top + "% off minimum");
-        }
-        return bits.length ? esc(curStage.name) + " — " + bits.join(" · ") : "";
+        if (pl) bits.push(pl.all ? "platform " + pl.all + "%" : "platforms " + pl.side + "% / " + pl.top + "%");
+        return bits.length ? esc(curStage.name) + ": " + bits.join(" · ") : "";
+    }
+
+    function rageList(r) {
+        if (!r) return "";
+        return Object.keys(r).map(function (k) { return r[k].replace("Subtract ", "") + " @ " + k + "%"; }).join(", ");
     }
 
     function otherSection(ch) {
-        var html = '<div class="sectionTitle">Other kill confirms</div><div class="moreInfo">';
+        var html = "";
 
-        // Dthrow > Up B
         var d = entries(ch, "dthrowUpB");
         if (d.length) {
             var v = d.map(function (e) {
-                var s = variantTag(e);
-                s += '<span class="sub">' + pretty(e.diOut) + "</span>";
+                var s = variantTag(e) + '<span class="sub">' + pretty(e.diOut) + "</span>";
                 if (e.difficulty) {
                     var hard = e.difficulty.indexOf("Very") === 0;
                     s += '<span class="badge ' + (hard ? "vhard" : "hard") + '">' + esc(e.difficulty) + "</span>";
@@ -228,74 +269,40 @@
                 return s;
             }).join("<br>");
             var notes = d.map(function (e) { return e.note ? esc(e.note) : ""; }).filter(Boolean);
-            var st = stageUpB();
-            html += row("Dthrow → Up B", v, [st].concat(notes).filter(Boolean).join("<br>"));
-        } else {
-            html += row("Dthrow → Up B", '<span class="noData">not labbed yet</span>');
+            html += row("Dthrow → Up B", v, [stageUpB()].concat(notes).filter(Boolean).join("<br>"));
         }
 
-        // Dthrow > Cyclone
         var c = entries(ch, "dthrowCyclone");
-        html += row("Dthrow → Cyclone",
-            c.length ? c.map(function (e) { return pretty(e.range); }).join("<br>") : '<span class="noData">not labbed yet</span>',
-            c.length ? "Final Destination, DI included, fast-fall cyclone" : "");
+        if (c.length) html += row("Dthrow → Cyclone", c.map(function (e) { return pretty(e.range); }).join("<br>"), "Final Destination");
 
-        // Utilt > Up B
         var u = entries(ch, "utiltUpB");
         if (u.length) {
             html += row("Utilt → Up B", u.map(function (e) { return variantTag(e) + pretty(e.range); }).join("<br>"),
                 u.map(function (e) { return e.note ? esc(e.note) : ""; }).filter(Boolean).join("<br>"));
-        } else {
-            html += row("Utilt → Up B", '<span class="noData">not labbed yet</span>');
         }
 
-        // Dtilt > Up B
         var dt = entries(ch, "dtiltUpB");
         if (dt.length) {
             html += row("Dtilt → Up B", dt.map(function (e) {
                 var t = variantTag(e) + pretty(e.range);
                 if (e.fd) t += '<span class="sub"><span class="lbl">FD from</span>' + e.fd + "%</span>";
                 return t;
-            }).join("<br>"),
-                ["Battlefield range"].concat(dt.map(function (e) { return e.note ? esc(e.note) : ""; })).filter(Boolean).join("<br>"));
-        } else {
-            html += row("Dtilt → Up B", '<span class="noData">not labbed yet</span>');
+            }).join("<br>"), dt.map(function (e) { return e.note ? esc(e.note) : ""; }).filter(Boolean).join("<br>"));
         }
 
-        // Nair > Up B
         var n = entries(ch, "nairUpB");
         if (n.length) {
-            var nv = n.map(function (e) {
-                var s = variantTag(e) + pretty(e.kill);
-                var late = [];
-                if (e.diIn) late.push("DI in " + pretty(e.diIn));
-                if (e.noDI) late.push("No DI " + pretty(e.noDI));
-                if (e.diOut) late.push("DI out " + pretty(e.diOut));
-                if (late.length) s += '<span class="sub"><span class="lbl">Late nair</span>' + late.join(" · ") + "</span>";
-                return s;
-            }).join("<br>");
-            html += row("Nair → Up B", nv, "A single number means only the minimum is labbed");
-        } else {
-            html += row("Nair → Up B", '<span class="noData">not labbed yet</span>');
+            html += row("Nair → Up B", n.map(function (e) { return variantTag(e) + pretty(e.kill); }).join("<br>"));
         }
 
-        // Nair > Cyclone
-        html += row("Nair → Cyclone", '<span class="noData">not labbed yet</span>');
-
-        // Raw Up B KO
         var k = entries(ch, "upBKO");
         if (k.length) {
             html += row("Up B (raw KO)", k.map(function (e) {
-                var s = variantTag(e) + "FD ~" + pretty(e.fd).replace("~", "") + " · BF ~" + pretty(e.bf).replace("~", "");
-                return s;
+                return variantTag(e) + "FD ~" + pretty(e.fd).replace("~", "") + " · BF ~" + pretty(e.bf).replace("~", "");
             }).join("<br>"), Object.keys(k[0].rage || {}).length ? "Rage: subtract " + rageList(k[0].rage) : "");
         }
-        return html + "</div>";
-    }
-
-    function rageList(r) {
-        if (!r) return "see info";
-        return Object.keys(r).map(function (k) { return r[k].replace("Subtract ", "") + " @ " + k + "%"; }).join(", ");
+        if (!html) return "";
+        return '<div class="sectionTitle">Kill confirms</div><div class="moreInfo">' + html + "</div>";
     }
 
     var DIFF_LABEL = { easy: "Easy", medium: "Medium", hard: "Hard" };
@@ -316,26 +323,11 @@
         return html + "</div>";
     }
 
-    // Matchup gameplan: short Do / Don't lists (+ stage advice where the notes have it)
-    function gameplanSection(ch) {
-        var g = D.matchup && D.matchup[ch.name];
-        if (!g) return "";
-        function list(items) {
-            return items.map(function (t) { return '<span class="sub">• ' + esc(t) + "</span>"; }).join("");
-        }
-        var html = '<div class="sectionTitle">Gameplan</div><div class="moreInfo">';
-        if (g["do"].length) html += row('<span class="gp-do">Do</span>', list(g["do"]), "");
-        if (g.dont.length) html += row('<span class="gp-dont">Watch out</span>', list(g.dont), "");
-        if (g.stage) html += row("Stage", esc(g.stage), "");
-        return html + "</div>";
-    }
-
-    // Bair > Dtilt followups, short hop and full hop Bair
+    // wBair > Dtilt followups, short hop and full hop
     function bairDtilt(ch) {
         var b = D.bairDtilt && D.bairDtilt[ch.name];
         if (!b) return "";
-        var html = '<div class="sectionTitle">wBair → Dtilt followups</div>' +
-            '<div class="ztdSub">land wBair → turn around Dtilt → then:</div><div class="moreInfo">';
+        var html = '<div class="sectionTitle">wBair → Dtilt followups</div><div class="moreInfo">';
         [["sh", "Short hop"], ["fh", "Full hop"]].forEach(function (k) {
             var e = b[k[0]];
             if (!e) return;
@@ -353,7 +345,7 @@
         return '<span class="tier-' + t + '">' + esc(text) + "</span>";
     }
 
-    // Shield poking: how to poke through the opponent's shield. "Can't poke" (tier 0) is left out.
+    // Shield poking: "Can't poke" (tier 0) is left out.
     function pokeSection(ch) {
         var list = (D.poke && D.poke[ch.name]) || [];
         if (!list.length) return "";
@@ -392,7 +384,8 @@
             html += '<div class="charIco" style="background-position-x:' + ((ch.sprite - 1) * -50) + 'px"></div>' +
                 '<div class="charSubTitle">' + esc(ch.name) + "</div>";
         }
-        return html + crouchNote(ch) + ztdSection(ch) + specificSection(ch) + gameplanSection(ch) + otherSection(ch) + bairDtilt(ch) + ledgeSection(ch) + pokeSection(ch);
+        return html + crouchNote(ch) + ztdSection(ch) + specificSection(ch) + gameplanSection(ch) +
+            otherSection(ch) + bairDtilt(ch) + ledgeSection(ch) + pokeSection(ch);
     }
 
     // ------------------------------------------------------------ render
@@ -452,8 +445,7 @@
         var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
         root.setAttribute("data-theme", next);
         store("theme", next);
-        buildLedgeTips();
-    syncThemeIcon();
+        syncThemeIcon();
     };
 
     function syncThemeIcon() {
@@ -496,6 +488,7 @@
         else if (e.key === "]") { e.preventDefault(); clearAndFocus("stage"); }
     });
 
+    buildLedgeTips();
     syncThemeIcon();
     showPage();
     render();
